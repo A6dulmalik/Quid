@@ -36,9 +36,9 @@ model User {
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
 
-  missions    Mission[]
-  submissions Submission[]
   missions    Mission[] // one-to-many, since users can have many missions.
+  /// Uncomment when the submission model is merged
+  // submissions Submission[]
   // submissions Submission[] // same as missions
   // drafts      Draft[] // same as above two
 
