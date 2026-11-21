@@ -12,6 +12,7 @@ enum UserRole {
 }
 
 enum MissionStatus {
+ CREATED
  OPEN
  STARTED
  PAUSED
@@ -74,9 +75,12 @@ model Mission {
  participantsCount Int @default(0) @map("participants_count")
  status MissionStatus @default(OPEN) @map("status")
  aiSummary String @map("ai_summary")
- /// Soroban contract id of the mission on `quid-store`, e.g. "C...".
- /// NULL until the creator publishes the mission on-chain; unique so one
- /// on-chain mission maps to exactly one off-chain row.
+ minAssetToken String? @map("min_asset_token")
+ minAssetAmount Decimal @default(0) @db.Decimal(39, 0) @map("min_asset_amount")
+ /// Optional unix timestamp encoded as a decimal string to preserve the full u64 range.
+ expiresAt String? @map("expires_at")
+ /// Decimal u64 mission id returned by `create_mission`, stored as text to
+ /// preserve precision. NULL until the creator publishes the mission on-chain.
  onChainId String? @unique @map("on_chain_id")
  indexedFromChain Boolean @default(false) @map("indexed_from_chain")
  createdAt DateTime @default(now()) @map("created_at")
@@ -115,6 +119,8 @@ model Submission {
  textPayload String? @map("text_payload")
  sentiment Float? @map("sentiment")
  status SubmissionStatus @default(PENDING) @map("status")
+ stakeToken String? @map("stake_token")
+ stakeAmount Decimal? @db.Decimal(39, 0) @map("stake_amount")
  rejectionReason String? @map("rejection_reason")
  txHash String? @unique @map("tx_hash")
  chainConfirmed Boolean @default(false) @map("chain_confirmed")

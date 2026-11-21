@@ -67,7 +67,6 @@ export const WIZARD_STEPS: { key: WizardStepKey; label: string }[] = [
   { key: "review", label: "Review & publish" },
 ];
 
-export const AVAILABLE_WALLET_BALANCE = 1240;
 export const PLATFORM_FEE_RATE = 0.00375;
 export const NETWORK_FEE_ESTIMATE = 0.1;
 
@@ -142,11 +141,14 @@ export function formatDateTime(value: string): string {
   });
 }
 
-export function rewardCalculations(rewards: RewardsData) {
+export function rewardCalculations(
+  rewards: RewardsData,
+  availableWalletBalance = 0,
+) {
   const platformFee = rewards.totalRewardBudget * PLATFORM_FEE_RATE;
   const networkFee = NETWORK_FEE_ESTIMATE;
   const totalRequired = rewards.totalRewardBudget + platformFee + networkFee;
-  const remaining = AVAILABLE_WALLET_BALANCE - totalRequired;
+  const remaining = availableWalletBalance - totalRequired;
   const rewardPerWinner =
     rewards.numberOfWinners > 0
       ? rewards.totalRewardBudget / rewards.numberOfWinners

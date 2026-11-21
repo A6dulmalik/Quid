@@ -216,6 +216,9 @@ export class MissionsService {
           rewardAmount: dto.rewardAmount,
           maxParticipants: dto.maxParticipants,
           aiSummary: dto.aiSummary ?? draft.title,
+          minAssetToken: dto.minAssetToken ?? null,
+          minAssetAmount: new Prisma.Decimal(dto.minAssetAmount ?? '0'),
+          expiresAt: dto.expiresAt ?? null,
         };
 
         const mission = existingMission

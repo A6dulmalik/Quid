@@ -12,6 +12,9 @@ describe('MissionsService publish and attach', () => {
     rewardToken: 'CTOKEN',
     rewardAmount: '100',
     maxParticipants: 5,
+    minAssetToken: 'CACCESSGATE',
+    minAssetAmount: '12300000',
+    expiresAt: '1798761600',
   };
   let service: MissionsService;
   let tx: {
@@ -74,8 +77,14 @@ describe('MissionsService publish and attach', () => {
         onChainId: '42',
         metadataCid: 'bafydescription',
         metadata: {},
+        minAssetToken: 'CACCESSGATE',
+        expiresAt: '1798761600',
       }),
     });
+    const createData = tx.mission.create.mock.calls[0][0].data as {
+      minAssetAmount: { toString(): string };
+    };
+    expect(createData.minAssetAmount.toString()).toBe('12300000');
     expect(tx.missionDraft.updateMany).toHaveBeenCalledWith({
       where: { id: 'draft-1', publishedMissionId: null },
       data: {

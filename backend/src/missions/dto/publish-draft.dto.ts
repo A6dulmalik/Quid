@@ -12,7 +12,7 @@ import { Prisma } from '@prisma/client';
 
 export class PublishDraftDto {
   @IsString()
-  @Matches(/^\d+$/)
+  @Matches(/^(0|[1-9]\d{0,19})$/)
   onChainId: string = '';
 
   @IsString()
@@ -44,4 +44,19 @@ export class PublishDraftDto {
   @IsOptional()
   @IsString()
   aiSummary?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  minAssetToken?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^(0|[1-9]\d{0,38})$/)
+  minAssetAmount?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^\d{1,20}$/)
+  expiresAt?: string;
 }
