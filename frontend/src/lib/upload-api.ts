@@ -1,4 +1,5 @@
 import { getApiBaseUrl } from "@/lib/api-base";
+import { creatorApiFetch } from "@/lib/creator-api";
 import {
   ApiSessionExpiredError,
   authenticate,
@@ -20,6 +21,31 @@ export interface UploadResponse {
   filename?: string;
   size?: number;
   [key: string]: unknown;
+}
+
+/** Pins creator mission metadata using the authenticated JSON upload endpoint. */
+export async function uploadMissionMetadataToIpfs(
+  payload: Record<string, unknown>,
+  ownerAddress: string,
+): Promise<string> {
+  const response = await creatorApiFetch("/upload/json", ownerAddress, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(
+      `Mission metadata upload failed (${response.status}): ${detail || response.statusText}`,
+    );
+  }
+
+  const data = (await response.json()) as UploadResponse;
+  if (typeof data.cid !== "string" || !data.cid) {
+    throw new Error("Mission metadata upload did not return a valid CID.");
+  }
+  return data.cid;
 }
 
 export const MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024; // 10MB

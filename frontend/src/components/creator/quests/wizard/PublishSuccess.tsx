@@ -2,7 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export default function PublishSuccess({ questId }: { questId: string }) {
+export default function PublishSuccess({
+  questId,
+  missionId,
+  txHash,
+  warning,
+}: {
+  questId: string | null;
+  missionId: string;
+  txHash: string;
+  warning?: string;
+}) {
   return (
     <div className="flex h-full min-h-[calc(100vh-5rem)] flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
       <Image
@@ -12,12 +22,18 @@ export default function PublishSuccess({ questId }: { questId: string }) {
         height={80}
         className="size-20"
       />
-      <h2 className="text-2xl font-semibold text-foreground">
-        Quest Published Successfully
-      </h2>
+      <h2 className="text-2xl font-semibold text-foreground">Quest Published</h2>
       <p className="max-w-sm text-sm text-muted-foreground">
-        Your quest has been successfully added to the campaign
+        Mission #{missionId} is escrowed on Stellar testnet.
       </p>
+      <p className="max-w-lg break-all text-xs text-muted-foreground">
+        Transaction: {txHash}
+      </p>
+      {warning ? (
+        <p role="status" className="max-w-lg text-sm text-amber-300">
+          {warning}
+        </p>
+      ) : null}
       <div className="mt-2 flex items-center gap-3">
         <Link
           href="/creator/quests"
@@ -25,13 +41,15 @@ export default function PublishSuccess({ questId }: { questId: string }) {
         >
           Close
         </Link>
-        <Link
-          href={`/creator/quests/${questId}`}
-          className="flex items-center gap-1.5  bg-[#8B5CF6] px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0]"
-        >
-          View quest
-          <ArrowRight className="size-4" />
-        </Link>
+        {questId ? (
+          <Link
+            href={`/creator/quests/${questId}`}
+            className="flex items-center gap-1.5  bg-[#8B5CF6] px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0]"
+          >
+            View quest
+            <ArrowRight className="size-4" />
+          </Link>
+        ) : null}
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import Image from "next/image";
 import stellarIcon from "../../../../../../public/quest-detail/stellar-icon.png";
 import { FieldLabel, NumberField, SelectField } from "../fields";
 import {
-  AVAILABLE_WALLET_BALANCE,
   rewardCalculations,
   type RewardsData,
 } from "../types";
@@ -15,13 +14,15 @@ function XlmIcon() {
 
 export default function RewardsStep({
   data,
+  availableWalletBalance,
   onChange,
 }: {
   data: RewardsData;
+  availableWalletBalance: number;
   onChange: (patch: Partial<RewardsData>) => void;
 }) {
   const { platformFee, networkFee, totalRequired, remaining, rewardPerWinner } =
-    rewardCalculations(data);
+    rewardCalculations(data, availableWalletBalance);
 
   return (
     <div className="flex flex-col gap-6">
@@ -85,9 +86,12 @@ export default function RewardsStep({
           </p>
         </div>
         <div>
-          <p className="text-xs text-muted-foreground">Available wallet balance</p>
+          <p className="text-xs text-muted-foreground">Available XLM balance</p>
           <p className="mt-1 text-lg font-semibold text-foreground">
-            {AVAILABLE_WALLET_BALANCE.toLocaleString()} XLM
+            {availableWalletBalance.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}{" "}
+            XLM
           </p>
         </div>
         <div>
@@ -114,7 +118,17 @@ export default function RewardsStep({
   );
 }
 
-export function isRewardsStepValid(data: RewardsData): boolean {
-  const { remaining } = rewardCalculations(data);
-  return data.totalRewardBudget > 0 && data.numberOfWinners > 0 && remaining >= 0;
+export function isRewardsStepValid(
+  data: RewardsData,
+  availableWalletBalance: number,
+): boolean {
+  const { remaining } = rewardCalculations(data, availableWalletBalance);
+  return (
+    Number.isFinite(data.totalRewardBudget) &&
+    data.totalRewardBudget > 0 &&
+    Number.isInteger(data.numberOfWinners) &&
+    data.numberOfWinners > 0 &&
+    data.numberOfWinners <= 0xffffffff &&
+    remaining >= 0
+  );
 }

@@ -14,9 +14,16 @@ const RPC_URL =
   process.env.NEXT_PUBLIC_SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
 const HORIZON_URL =
   process.env.NEXT_PUBLIC_HORIZON_URL || "https://horizon-testnet.stellar.org";
-const STORE_CONTRACT_ID =
-  process.env.NEXT_PUBLIC_QUID_STORE_ID ||
-  "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM";
+const STORE_CONTRACT_ID = process.env.NEXT_PUBLIC_QUID_STORE_ID;
+
+export function getStoreContract(): Contract {
+  if (!STORE_CONTRACT_ID || STORE_CONTRACT_ID.startsWith("CAAAAAAAAAAAAAAA")) {
+    throw new Error(
+      "The quid-store contract is not configured. Set NEXT_PUBLIC_QUID_STORE_ID to its deployed contract address.",
+    );
+  }
+  return new Contract(STORE_CONTRACT_ID);
+}
 
 export interface SubmitFeedbackParams {
   missionId: number | bigint;
@@ -32,7 +39,6 @@ export interface SubmissionReceipt {
   missionId: string;
   hunter: string;
   cid: string;
-  simulated?: boolean;
 }
 
 export interface PayoutParticipantParams {
@@ -49,7 +55,6 @@ export interface PayoutReceipt {
   txHash: string;
   missionId: string;
   hunter: string;
-  simulated?: boolean;
 }
 
 export interface RejectSubmissionParams {
@@ -145,9 +150,7 @@ export function describeSorobanFailure(res: unknown): string {
  * `NotAuthorized` (#6). Returns the tx hash so the caller can await
  * confirmation before flipping the row to "paid".
  *
- * Unlike `submitFeedbackToContract` this deliberately has **no** simulated
- * fallback: silently reporting a successful payout that never moved funds would
- * be worse than an error.
+ * A success receipt is returned only after Soroban confirms the transaction.
  */
 export async function payoutParticipantToContract({
   missionId,
@@ -166,7 +169,7 @@ export async function payoutParticipantToContract({
 
   try {
     const account = await horizonServer.loadAccount(ownerAddress);
-    const contract = new Contract(STORE_CONTRACT_ID);
+    const contract = getStoreContract();
 
     const callOp = contract.call(
       "payout_participant",
@@ -221,6 +224,11 @@ export async function payoutParticipantToContract({
     if (getTxRes.status === "FAILED") {
       throw new ContractInvokeError(describeSorobanFailure(getTxRes));
     }
+    if (getTxRes.status !== "SUCCESS") {
+      throw new Error(
+        `Transaction ${sendRes.hash} was submitted but is not yet confirmed. Check its status before retrying.`,
+      );
+    }
 
     return {
       success: true,
@@ -247,9 +255,7 @@ export async function payoutParticipantToContract({
  * `NotAuthorized` (#6), surfaced here as a `ContractInvokeError` for
  * `parseQuidError` to translate.
  *
- * No simulated fallback (mirrors `payoutParticipantToContract`): a
- * silently-successful pause/cancel/reject that never touched the chain would
- * be worse than a visible error.
+ * Returns only after Soroban confirms the requested state change.
  */
 async function invokeStoreOwnerCall(
   fnName: string,
@@ -266,7 +272,7 @@ async function invokeStoreOwnerCall(
 
   try {
     const account = await horizonServer.loadAccount(ownerAddress);
-    const contract = new Contract(STORE_CONTRACT_ID);
+    const contract = getStoreContract();
 
     const callOp = contract.call(fnName, ...args);
 
@@ -314,6 +320,11 @@ async function invokeStoreOwnerCall(
 
     if (getTxRes.status === "FAILED") {
       throw new ContractInvokeError(describeSorobanFailure(getTxRes));
+    }
+    if (getTxRes.status !== "SUCCESS") {
+      throw new Error(
+        `Transaction ${sendRes.hash} was submitted but is not yet confirmed. Check its status before retrying.`,
+      );
     }
 
     return { txHash: sendRes.hash };
@@ -440,7 +451,7 @@ export async function submitFeedbackToContract({
     const account = await horizonServer.loadAccount(hunterAddress);
 
     // 2. Prepare contract call
-    const contract = new Contract(STORE_CONTRACT_ID);
+    const contract = getStoreContract();
 
     const callOp = contract.call(
       "submit_feedback",
@@ -463,12 +474,10 @@ export async function submitFeedbackToContract({
     // 4. Simulate transaction against Soroban RPC
     const simResult = await rpcServer.simulateTransaction(tx);
 
-    let txToSign = tx;
-    if (rpc.Api.isSimulationSuccess(simResult)) {
-      txToSign = rpc.assembleTransaction(tx, simResult).build();
-    } else {
-      console.warn("Soroban simulation non-fatal warning:", simResult);
+    if (!rpc.Api.isSimulationSuccess(simResult)) {
+      throw new ContractInvokeError(simResult);
     }
+    const txToSign = rpc.assembleTransaction(tx, simResult).build();
 
     // 5. Sign transaction using Freighter wallet
     const signedXdr = await signFreighterTransaction(
@@ -488,7 +497,7 @@ export async function submitFeedbackToContract({
     );
 
     if (sendRes.status === "ERROR") {
-      throw new Error(`Soroban transaction failed: ${JSON.stringify(sendRes.errorResult)}`);
+      throw new ContractInvokeError(sendRes.errorResult);
     }
 
     // 7. Poll for final confirmation
@@ -500,6 +509,15 @@ export async function submitFeedbackToContract({
       attempts++;
     }
 
+    if (getTxRes.status === "FAILED") {
+      throw new ContractInvokeError(describeSorobanFailure(getTxRes));
+    }
+    if (getTxRes.status !== "SUCCESS") {
+      throw new Error(
+        `Transaction ${sendRes.hash} was submitted but is not yet confirmed. Check its status before retrying.`,
+      );
+    }
+
     return {
       success: true,
       txHash: sendRes.hash,
@@ -508,28 +526,10 @@ export async function submitFeedbackToContract({
       cid: ipfsCid,
     };
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : "Contract execution error";
-
-    // If local testnet or placeholder IDs are being used without a live deploy, provide a graceful fallback with full simulated transaction receipt
-    if (
-      STORE_CONTRACT_ID.startsWith("CAAAAAAAAAAAAAAA") ||
-      errorMsg.includes("not found") ||
-      errorMsg.includes("404") ||
-      errorMsg.includes("simulate")
-    ) {
-      console.warn("Operating with demo/placeholder contract ID. Generated receipt:", errorMsg);
-      const mockTxHash = `0x${Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("")}`;
-
-      return {
-        success: true,
-        txHash: mockTxHash,
-        missionId: missionId.toString(),
-        hunter: hunterAddress,
-        cid: ipfsCid,
-        simulated: true,
-      };
+    if (error instanceof ContractInvokeError) {
+      throw error;
     }
-
+    const errorMsg = error instanceof Error ? error.message : "Contract execution error";
     throw new Error(`Smart contract invocation failed: ${errorMsg}`);
   }
 }

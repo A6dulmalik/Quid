@@ -4,6 +4,7 @@ export default function WizardFooter({
   isFirstStep,
   isLastStep,
   canContinue,
+  publishing,
   onBack,
   onPreview,
   onSaveDraft,
@@ -12,6 +13,7 @@ export default function WizardFooter({
   isFirstStep: boolean;
   isLastStep: boolean;
   canContinue: boolean;
+  publishing: boolean;
   onBack: () => void;
   onPreview: () => void;
   onSaveDraft: () => void;
@@ -50,11 +52,11 @@ export default function WizardFooter({
         </button>
         <button
           type="button"
-          disabled={!canContinue}
+          disabled={!canContinue || publishing}
           onClick={onContinue}
           className="flex items-center gap-1.5  bg-[#8B5CF6] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-muted-foreground"
         >
-          {isLastStep ? "Publish quest" : "Continue"}
+          {publishing ? "Publishing…" : isLastStep ? "Publish quest" : "Continue"}
           <ArrowRight className="size-4" />
         </button>
       </div>

@@ -14,27 +14,50 @@ import ScheduleStep, { isScheduleStepValid } from "./steps/ScheduleStep";
 import ReviewStep from "./steps/ReviewStep";
 import { WIZARD_STEPS, createDefaultWizardData, type QuestWizardData } from "./types";
 import { toast } from "@/context/ToastContext";
+import { creatorApiFetch } from "@/lib/creator-api";
+import { useWallet } from "@/context/WalletProvider";
+import { createMission } from "@/lib/soroban/quid-store";
+import { uploadMissionMetadataToIpfs } from "@/lib/upload-api";
 
-function slugify(title: string): string {
-  const slug = title
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-  return slug || `quest-${Date.now()}`;
+interface PublishedMission {
+  questId: string | null;
+  missionId: string;
+  txHash: string;
+  warning?: string;
+}
+
+interface SavedDraft {
+  id: string;
+}
+
+function rewardAmountToStroops(amount: number): bigint {
+  if (
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
+    amount > Number.MAX_SAFE_INTEGER
+  ) {
+    throw new Error("Enter a positive reward amount.");
+  }
+  const [whole, fraction = ""] = amount.toFixed(7).split(".");
+  return BigInt(whole) * BigInt(10_000_000) + BigInt(fraction.padEnd(7, "0"));
 }
 
 export default function QuestWizard({
   onPublish,
 }: {
-  onPublish: (questId: string) => void;
+  onPublish: (mission: PublishedMission) => void;
 }) {
   const [data, setDataState] = useState<QuestWizardData>(() => createDefaultWizardData());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [maxReachedIndex, setMaxReachedIndex] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   const [saved, setSaved] = useState(true);
+  const [publishing, setPublishing] = useState(false);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { publicKey, balances } = useWallet();
+  const availableWalletBalance = Number(
+    balances.find((balance) => balance.asset_type === "native")?.balance ?? 0,
+  );
 
   function setData(updater: (prev: QuestWizardData) => QuestWizardData) {
     setDataState(updater);
@@ -47,7 +70,7 @@ export default function QuestWizard({
     isBasicsStepValid(data.basics),
     isEligibilityStepValid(),
     isTasksStepValid(data.tasks),
-    isRewardsStepValid(data.rewards),
+    isRewardsStepValid(data.rewards, availableWalletBalance),
     isScheduleStepValid(data.schedule),
     true,
   ][currentIndex];
@@ -67,11 +90,7 @@ export default function QuestWizard({
     if (!stepValid) return;
 
     if (isLastStep) {
-      const slug = slugify(data.basics.title);
-      toast.success("Quest created successfully!", {
-        description: `"${data.basics.title || "Quest"}" has been published to the campaign.`,
-      });
-      onPublish(slug);
+      void publishMission();
       return;
     }
 
@@ -80,12 +99,157 @@ export default function QuestWizard({
     setMaxReachedIndex((max) => Math.max(max, nextIndex));
   }
 
-  function handleSaveDraft() {
-    toast.info("Draft saved successfully!", {
-      description: `Draft "${data.basics.title || "Untitled quest"}" has been saved.`,
+  async function saveDraftRecord(): Promise<SavedDraft> {
+    if (!publicKey) throw new Error("Connect your wallet before saving a quest.");
+
+    const response = await creatorApiFetch("/missions/drafts", publicKey, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: data.basics.title, data }),
     });
-    // Stub until POST /missions/drafts is wired up.
-    window.location.href = "/creator/quests";
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(
+        `Could not save the quest draft (${response.status}): ${detail || response.statusText}`,
+      );
+    }
+
+    const draft = (await response.json()) as Partial<SavedDraft>;
+    if (typeof draft.id !== "string" || !draft.id) {
+      throw new Error("The draft service did not return a draft id.");
+    }
+    return { id: draft.id };
+  }
+
+  async function handleSaveDraft() {
+    try {
+      await saveDraftRecord();
+      toast.success("Draft saved successfully.", {
+        description: `Draft "${data.basics.title || "Untitled quest"}" has been saved.`,
+      });
+      window.location.href = "/creator/quests";
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Could not save the quest draft.",
+      );
+    }
+  }
+
+  async function publishMission() {
+    if (!publicKey) {
+      toast.error("Connect your wallet before publishing a mission.");
+      return;
+    }
+
+    if (data.basics.visibility !== "public") {
+      toast.error(
+        "Private missions are not supported by the on-chain marketplace yet.",
+      );
+      return;
+    }
+    if (
+      data.schedule.publishOption === "scheduled" &&
+      new Date(data.schedule.startDateTime).getTime() > Date.now()
+    ) {
+      toast.error(
+        "Scheduled on-chain publishing is not supported yet. Choose publish immediately.",
+      );
+      return;
+    }
+
+    const rewardTokenAddress = process.env.NEXT_PUBLIC_REWARD_TOKEN_XLM;
+    if (!rewardTokenAddress) {
+      toast.error("The XLM reward token is not configured for this deployment.");
+      return;
+    }
+
+    const closingTime = new Date(data.schedule.closingDateTime);
+    if (Number.isNaN(closingTime.getTime()) || closingTime.getTime() <= Date.now()) {
+      toast.error("Choose a closing date and time in the future.");
+      return;
+    }
+
+    setPublishing(true);
+    try {
+      const draft = await saveDraftRecord();
+      const metadata = {
+        schemaVersion: 1,
+        title: data.basics.title.trim(),
+        description: data.basics.description.trim(),
+        quest: data,
+      };
+      const descriptionCid = await uploadMissionMetadataToIpfs(
+        metadata,
+        publicKey,
+      );
+      const rewardAmount = rewardAmountToStroops(
+        data.rewards.totalRewardBudget / data.rewards.numberOfWinners,
+      );
+      const expiresAt = BigInt(Math.floor(closingTime.getTime() / 1000));
+      const chainMission = await createMission({
+        ownerAddress: publicKey,
+        title: data.basics.title,
+        descriptionCid,
+        rewardTokenAddress,
+        rewardAmount,
+        maxParticipants: data.rewards.numberOfWinners,
+        expiresAt,
+      });
+
+      let questId: string | null = null;
+      let warning: string | undefined;
+      try {
+        const publishResponse = await creatorApiFetch(
+          `/missions/drafts/${draft.id}/publish`,
+          publicKey,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              onChainId: chainMission.missionId,
+              descriptionCid,
+              metadataCid: descriptionCid,
+              metadata,
+              rewardToken: rewardTokenAddress,
+              rewardAmount: rewardAmount.toString(),
+              maxParticipants: data.rewards.numberOfWinners,
+              minAssetToken: null,
+              minAssetAmount: "0",
+              expiresAt: expiresAt.toString(),
+            }),
+          },
+        );
+        if (!publishResponse.ok) {
+          const detail = await publishResponse.text().catch(() => "");
+          throw new Error(
+            `The mission is live, but the dashboard could not be updated (${publishResponse.status}): ${detail || publishResponse.statusText}`,
+          );
+        }
+        const published = (await publishResponse.json()) as { id: string };
+        questId = published.id;
+      } catch (error) {
+        warning =
+          error instanceof Error
+            ? error.message
+            : "The mission is live, but the dashboard could not be updated.";
+      }
+
+      toast.success(`Mission #${chainMission.missionId} published on Stellar.`);
+      onPublish({
+        questId,
+        missionId: chainMission.missionId,
+        txHash: chainMission.txHash,
+        warning,
+      });
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Mission publishing failed. No success was reported.",
+      );
+    } finally {
+      setPublishing(false);
+    }
   }
 
   return (
@@ -148,6 +312,7 @@ export default function QuestWizard({
         {currentIndex === 3 ? (
           <RewardsStep
             data={data.rewards}
+            availableWalletBalance={availableWalletBalance}
             onChange={(patch) =>
               setData((prev) => ({ ...prev, rewards: { ...prev.rewards, ...patch } }))
             }
@@ -168,6 +333,7 @@ export default function QuestWizard({
         isFirstStep={isFirstStep}
         isLastStep={isLastStep}
         canContinue={stepValid}
+        publishing={publishing}
         onBack={handleBack}
         onPreview={() => setShowPreview(true)}
         onSaveDraft={handleSaveDraft}
