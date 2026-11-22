@@ -5,6 +5,9 @@ const backendUrl =
 
 const nextConfig: NextConfig = {
   images: {
+    // The multi-service vercel.json setup doesn't serve /_next/image (it 404s),
+    // so serve files from /public directly instead of through the optimizer.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
