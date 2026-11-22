@@ -42,9 +42,9 @@ export const NoQuestsEmptyState: React.FC<{ onCreateQuest: () => void }> = ({
 }) => {
   return (
     <EmptyState
-      title="No Active Quests"
-      description="You haven't created any quests yet. Create your first quest to start receiving responses from participants."
-      actionLabel="Create Your First Quest"
+      title="No Active Missions"
+      description="You haven't created any missions yet. Create your first mission to start receiving test reports from hunters."
+      actionLabel="Create Your First Mission"
       onAction={onCreateQuest}
       icon={<FileText className="size-8 text-purple-400" />}
     />
@@ -55,7 +55,7 @@ export const NoResponsesEmptyState: React.FC = () => {
   return (
     <EmptyState
       title="No Responses Yet"
-      description="You don't have any responses yet. Participants will appear here once they start submitting responses to your quests."
+      description="You don't have any reports yet. Hunters will appear here once they start submitting reports to your missions."
       icon={<FileText className="size-8 text-blue-400" />}
     />
   );

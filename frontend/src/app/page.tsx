@@ -4,6 +4,7 @@ import {
   MoreFeatures,
   OpportunitiesSection,
   HowItWorksSection,
+  RoadmapSection,
   FAQSection,
   BusinessCTASection,
   Footer,
@@ -18,6 +19,7 @@ export default function Home() {
         <MoreFeatures />
         <OpportunitiesSection />
         <HowItWorksSection />
+        <RoadmapSection />
         <FAQSection />
         <BusinessCTASection />
         <Footer />

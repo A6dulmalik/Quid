@@ -39,7 +39,7 @@ export default function QuestRowMenu({
     <div ref={containerRef} className="relative">
       <button
         type="button"
-        aria-label="Quest actions"
+        aria-label="Mission actions"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}

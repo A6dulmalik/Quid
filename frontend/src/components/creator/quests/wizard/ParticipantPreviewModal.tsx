@@ -27,7 +27,7 @@ export default function ParticipantPreviewModal({
       <div className="w-full max-w-xl  border border-foreground/30 bg-background brutal-grid-bg p-6 shadow-2xl">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-foreground">
-            Participant preview
+            Hunter preview
           </h2>
           <button
             type="button"
@@ -40,7 +40,7 @@ export default function ParticipantPreviewModal({
         </div>
 
         <h3 className="text-xl font-semibold text-foreground">
-          {data.basics.title || "Untitled quest"}
+          {data.basics.title || "Untitled mission"}
         </h3>
         <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
           <Image

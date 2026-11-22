@@ -25,13 +25,13 @@ const ROLES: Array<{
   {
     id: "creator",
     icon: "/role-selection/building-icon.png",
-    title: "Create surveys & get insights",
+    title: "Launch QA & UX missions",
     description:
-      "Launch research projects and collect quality responses from engaged participants",
+      "Get bug and UX reports on your dApp from wallet-verified Stellar hunters",
     benefits: [
-      "Access to verified Stellar participants",
-      "Advanced analytics and reporting",
-      "Real-time response monitoring",
+      "Wallet-verified Stellar hunters",
+      "Structured bug and UX reports",
+      "Approve or reject every report",
       "On-chain escrow for rewards",
     ],
     accent: "cyan",
@@ -39,14 +39,14 @@ const ROLES: Array<{
   {
     id: "hunter",
     icon: "/role-selection/cash-icon.png",
-    title: "Take surveys & earn money",
+    title: "Test dApps & earn rewards",
     description:
-      "Share your opinions with brands and get rewarded for your valuable feedback",
+      "Test Stellar and Soroban dApps and get paid on-chain for useful reports",
     benefits: [
       "Earn USDC for each completed mission",
       "Flexible schedule — work anytime",
       "Fair compensation for your time",
-      "Instant payments via blockchain",
+      "Paid from on-chain escrow on approval",
     ],
     accent: "lime",
   },

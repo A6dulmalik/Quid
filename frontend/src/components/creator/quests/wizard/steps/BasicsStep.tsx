@@ -22,7 +22,7 @@ export default function BasicsStep({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <FieldLabel>Quest type</FieldLabel>
+        <FieldLabel>Mission type</FieldLabel>
         <div className="flex flex-col gap-3 sm:flex-row">
           <RadioCard
             title="Product testing"
@@ -32,7 +32,7 @@ export default function BasicsStep({
           />
           <RadioCard
             title="Community participation"
-            description="For quests restricted to community members or requiring participants to join a community."
+            description="For missions restricted to community members or requiring hunters to join a community."
             selected={data.questType === "community-participation"}
             onSelect={() => onChange({ questType: "community-participation" })}
           />
@@ -44,7 +44,7 @@ export default function BasicsStep({
           htmlFor="quest-title"
           hint={`${data.title.length}/${TITLE_MAX_LENGTH}`}
         >
-          Quest title
+          Mission title
         </FieldLabel>
         <TextInput
           id="quest-title"
@@ -56,12 +56,12 @@ export default function BasicsStep({
       </div>
 
       <div>
-        <FieldLabel htmlFor="quest-description">Quest description</FieldLabel>
+        <FieldLabel htmlFor="quest-description">Mission description</FieldLabel>
         <TextArea
           id="quest-description"
           value={data.description}
           onChange={(description) => onChange({ description })}
-          placeholder="An introduction for participants."
+          placeholder="An introduction for hunters."
         />
       </div>
 
@@ -78,7 +78,7 @@ export default function BasicsStep({
           />
         </div>
         <div>
-          <FieldLabel htmlFor="participant-limit">Participant limit</FieldLabel>
+          <FieldLabel htmlFor="participant-limit">Hunter limit</FieldLabel>
           <NumberField
             id="participant-limit"
             value={data.participantLimit}

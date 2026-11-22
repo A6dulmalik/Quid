@@ -3,12 +3,12 @@
 import { motion, Variants } from "framer-motion";
 
 const businessTags = [
-  "Product design",
-  "Market Strategy",
-  "Brand Perception",
-  "Market Research",
-  "Competition Analysis",
-  "Event Plan",
+  "Smart contract QA",
+  "Wallet onboarding",
+  "UX review",
+  "Regression testing",
+  "Mobile testing",
+  "Accessibility",
 ];
 
 const containerVariants: Variants = {
@@ -91,14 +91,14 @@ export default function BusinessCTASection() {
           className="font-mono text-xs font-bold uppercase tracking-widest text-brutal-yellow sm:text-sm"
           variants={labelVariants}
         >
-          Business
+          For Creators
         </motion.span>
 
         <motion.h2
           className="max-w-4xl text-3xl font-black uppercase leading-tight text-background sm:text-4xl md:text-5xl lg:text-6xl"
           variants={headingVariants}
         >
-          Are you looking for user insights on your product?
+          Shipping a Stellar or Soroban dApp?
         </motion.h2>
 
         {/* Tag Cloud */}
@@ -129,7 +129,7 @@ export default function BusinessCTASection() {
           className="mt-8 flex items-center gap-2 text-base font-black uppercase tracking-wide text-brutal-yellow md:mt-12 md:text-lg"
           variants={ctaVariants}
         >
-          Create a quest now
+          Launch a mission now
           <motion.span
             className="text-xl"
             whileHover={{ x: 3 }}

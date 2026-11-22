@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Quid",
-  description: "Launch Better Stellar Products with Real User Insight",
+  title: "Quid | On-Chain Verified QA & UX Testing",
+  description: "The On-Chain Verified QA & UX Testing Platform for Stellar & Soroban Builders",
 };
 
 export default function RootLayout({

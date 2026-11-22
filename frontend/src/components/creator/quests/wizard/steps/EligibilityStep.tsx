@@ -44,7 +44,7 @@ export default function EligibilityStep({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <FieldLabel htmlFor="max-submissions">
-            Maximum submissions per participant
+            Maximum submissions per hunter
           </FieldLabel>
           <NumberField
             id="max-submissions"

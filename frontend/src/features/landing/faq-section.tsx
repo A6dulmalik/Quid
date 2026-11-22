@@ -10,34 +10,34 @@ import {
 
 const faqData = [
   {
-    question: "How do you ensure response quality?",
+    question: "How do you make sure reports are useful?",
     answer:
-      "We use multi-layer verification, attention checks, and quality scoring. Plus, our fair reward system motivates thoughtful participation from genuine users.",
+      "Every hunter signs in with a Stellar wallet, so each report is tied to an on-chain identity. You review every report and only approved ones are paid.",
   },
   {
-    question: "Can I target specific demographics?",
+    question: "Can I choose who tests my dApp?",
     answer:
-      "Yes, our platform offers advanced targeting options. You can filter respondents by age, location, profession, interests, and more.",
+      "Yes. A mission can require hunters to hold a minimum balance of a token you pick, and you set the maximum number of hunters.",
   },
   {
-    question: "How quickly will I get responses?",
+    question: "How quickly will I get reports?",
     answer:
-      "Most campaigns start seeing results within minutes. Many users complete their data collection goals in under 24 hours.",
+      "It depends on the reward and how many hunters are active. A mission stays open until it fills, you close it, or its deadline passes.",
   },
   {
-    question: "How much do I pay per Quest?",
+    question: "How much does a Mission cost?",
     answer:
-      "You have full control over your budget. Pricing is based on the number of responses you need and the complexity of your survey.",
+      "You set the reward per hunter and the number of hunters. The total is escrowed in the quid-store contract when you publish, and unused escrow is refunded if you cancel.",
   },
   {
-    question: "What about data security and compliance?",
+    question: "Where are reports stored?",
     answer:
-      "All data is encrypted in transit and at rest. We are fully compliant with GDPR and other major privacy regulations.",
+      "Report content is pinned to IPFS and only its content ID is stored on-chain. Anyone with the content ID can read a report, so don't include private information.",
   },
   {
     question: "How does it work?",
     answer:
-      "Create your survey or task, set your target audience and budget, and launch. Verified users complete your quest and you receive actionable data.",
+      "Create a mission with a test plan and reward, then publish. Hunters submit reports, you review them, and approved hunters are paid from escrow.",
   },
 ];
 
@@ -56,7 +56,7 @@ export default function FAQSection() {
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-12">
         <header className="flex w-full flex-col items-center gap-4 text-center">
           <h2 className="w-full text-3xl font-black uppercase tracking-tight md:text-5xl">
-            Common Questions From Research Teams
+            Common Questions From Creators
           </h2>
           <p className="w-full text-base font-medium text-muted-foreground">
             Covers all the popular inquiries you may have.

@@ -12,12 +12,12 @@ export default function ReviewStep({ data }: { data: QuestWizardData }) {
       </p>
 
       <div className=" border border-foreground/30 bg-[#100D1C]/60 p-4">
-        <p className="mb-3 text-sm font-semibold text-foreground">Quest details</p>
+        <p className="mb-3 text-sm font-semibold text-foreground">Mission details</p>
         <div className="flex flex-col gap-3 text-sm">
           <div>
             <p className="text-xs text-muted-foreground">Title</p>
             <p className="mt-0.5 text-foreground">
-              {data.basics.title || "Untitled quest"}
+              {data.basics.title || "Untitled mission"}
             </p>
           </div>
           <div>
@@ -43,7 +43,7 @@ export default function ReviewStep({ data }: { data: QuestWizardData }) {
             <div>
               <p className="text-xs text-muted-foreground">Limit</p>
               <p className="mt-0.5 text-foreground">
-                {data.basics.participantLimit} participant
+                {data.basics.participantLimit} hunters
               </p>
             </div>
           </div>

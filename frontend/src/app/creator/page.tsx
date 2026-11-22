@@ -221,7 +221,7 @@ export default function CreatorDashboard() {
         <main className="flex-1 px-5 py-6 sm:px-8 lg:px-12">
           <EmptyState
             title="Connect your wallet"
-            description="Connect your founder wallet to load your quests and dashboard stats."
+            description="Connect your creator wallet to load your missions and dashboard stats."
             variant="card"
             action={{ label: "Connect wallet", onClick: () => void connect() }}
           />
@@ -279,7 +279,7 @@ export default function CreatorDashboard() {
           <div className="lg:col-span-2 lg:border-r lg:border-foreground/30 lg:pr-8">
             <div className="mb-6 flex items-center justify-between border-b border-foreground/30 pb-4">
               <h2 className="text-lg font-black uppercase tracking-tight text-foreground">
-                Active Quests
+                Active Missions
               </h2>
               <button
                 type="button"

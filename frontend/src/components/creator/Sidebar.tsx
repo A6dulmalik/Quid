@@ -8,6 +8,8 @@ import { TbLayoutDashboard } from "react-icons/tb";
 import { RiFileList3Line, RiFlagLine } from "react-icons/ri";
 import { BiSolidWallet } from "react-icons/bi";
 import { HiMenu, HiX } from "react-icons/hi";
+import { LuScale, LuShieldCheck } from "react-icons/lu";
+import { ComingSoonNavItem } from "@/components/ui/coming-soon";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -61,7 +63,7 @@ export default function Sidebar() {
             onClick={() => setIsOpen(false)}
           >
             <RiFileList3Line size={18} />
-            <span>Quests</span>
+            <span>Missions</span>
           </Link>
           <Link
             href="/creator/milestones"
@@ -80,6 +82,16 @@ export default function Sidebar() {
             <span>Wallet</span>
           </Link>
         </nav>
+
+        <div className="mt-6 border-t-[3px] border-foreground pt-4">
+          <p className="mb-2 pl-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+            Coming soon
+          </p>
+          <div className="flex flex-col gap-1">
+            <ComingSoonNavItem feature="proof-of-test" icon={LuShieldCheck} />
+            <ComingSoonNavItem feature="disputes" icon={LuScale} />
+          </div>
+        </div>
 
         <div className="mt-auto m-2 h-28 w-full brutal-border brutal-shadow bg-brutal-cyan" />
       </aside>

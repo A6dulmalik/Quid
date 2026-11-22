@@ -52,7 +52,7 @@ export const CreatorQuestCard: React.FC<CreatorQuestCardProps> = ({
               height={14}
               className="h-3.5 w-3.5"
             />
-            {category} Quest
+            {category} Mission
           </span>
           <span className="flex items-center gap-2">
             <Image

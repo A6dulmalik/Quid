@@ -293,7 +293,7 @@ export default function MilestonesPage() {
       <div className="min-h-screen px-5 py-6 text-foreground sm:px-8 lg:px-12">
         <EmptyState
           title="Connect your wallet"
-          description="Connect your founder wallet to create and manage milestone escrow programs."
+          description="Connect your creator wallet to create and manage milestone escrow programs."
           variant="card"
           action={{ label: "Connect wallet", onClick: () => void connect() }}
         />

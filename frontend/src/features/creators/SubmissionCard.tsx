@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Submission } from "@/app/hooks/useQuestData";
 import { useState } from "react";
 import { toast } from "@/context/ToastContext";
+import { ComingSoonBadge } from "@/components/ui/coming-soon";
 
 export default function SubmissionCard({
   submission,
@@ -105,6 +106,12 @@ export default function SubmissionCard({
               >
                 {submission.status}
               </span>
+
+              {/* On-chain Proof-of-Test insertion point. */}
+              <ComingSoonBadge
+                feature="proof-of-test"
+                className="hidden lg:inline-flex"
+              />
 
               {submission.status === "pending" && !isApproved && (
                 <>

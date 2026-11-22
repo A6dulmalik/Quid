@@ -13,6 +13,8 @@ import { UploadModule } from './upload/upload.module';
 import { IndexerModule } from './indexer/indexer.module';
 import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { VerificationModule } from './verification/verification.module';
+import { WebhooksModule } from './webhooks/webhooks.module';
 
 @Module({
   imports: [
@@ -43,6 +45,10 @@ import { NotificationsModule } from './notifications/notifications.module';
     // this has to be imported before IndexerModule resolves its dependency.
     NotificationsModule,
     IndexerModule,
+    // Extension points for upcoming work. Both are empty today; add providers
+    // inside each module instead of editing this list. See each README.md.
+    VerificationModule,
+    WebhooksModule,
   ],
   controllers: [AppController],
   providers: [

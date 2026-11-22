@@ -253,9 +253,9 @@ export default function CreatorQuestDetail({
       setStatusOverride("paused");
       setNotification({
         type: "success",
-        message: "Quest paused. New submissions are now blocked; existing escrow is untouched.",
+        message: "Mission paused. New submissions are now blocked; existing escrow is untouched.",
       });
-      toast.success("Quest paused", {
+      toast.success("Mission paused", {
         description: "Hunters can no longer submit new feedback to this quest.",
       });
     } catch (error: unknown) {
@@ -287,9 +287,9 @@ export default function CreatorQuestDetail({
       setStatusOverride("cancelled");
       setNotification({
         type: "success",
-        message: `Quest cancelled. ~${estimatedRefund} XLM refunded to your wallet. Tx ${receipt.txHash.slice(0, 8)}…`,
+        message: `Mission cancelled. ~${estimatedRefund} XLM refunded to your wallet. Tx ${receipt.txHash.slice(0, 8)}…`,
       });
-      toast.success("Quest cancelled", {
+      toast.success("Mission cancelled", {
         description: `Unspent escrow (~${estimatedRefund} XLM) was refunded to your wallet.`,
       });
     } catch (error: unknown) {
@@ -323,7 +323,7 @@ export default function CreatorQuestDetail({
       <div className="text-foreground px-3 py-1">
         <QuestHeader />
         <EmptyState
-          title="Could not load this quest"
+          title="Could not load this mission"
           description={error}
           variant="card"
           action={onRetry ? { label: "Try again", onClick: onRetry } : undefined}
@@ -383,7 +383,7 @@ export default function CreatorQuestDetail({
               onClick={handleEditQuest}
               className="text-sm text-[#9110FF] cursor-pointer hover:text-[#b844ff] transition-colors duration-200"
             >
-              Edit Quest
+              Edit Mission
             </button>
           )}
           {/* Issue #322: pause/cancel, both owner-gated and destructive, so
@@ -395,18 +395,18 @@ export default function CreatorQuestDetail({
                 onClick={() => setPauseConfirmOpen((prev) => !prev)}
                 disabled={isMissionPaused || missionActionPending !== null}
                 className="brutal-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-yellow-500/10 disabled:cursor-not-allowed disabled:opacity-50"
-                title={isMissionPaused ? "Quest is already paused" : "Pause new submissions"}
+                title={isMissionPaused ? "Mission is already paused" : "Pause new submissions"}
               >
-                {isMissionPaused ? "Paused" : "Pause Quest"}
+                {isMissionPaused ? "Paused" : "Pause Mission"}
               </button>
               <button
                 type="button"
                 onClick={() => setCancelConfirmOpen((prev) => !prev)}
                 disabled={missionActionPending !== null}
                 className="border border-red-500/50 bg-background px-4 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
-                title="Cancel quest and reclaim unspent escrow"
+                title="Cancel mission and reclaim unspent escrow"
               >
-                Cancel Quest
+                Cancel Mission
               </button>
             </>
           )}
@@ -416,7 +416,7 @@ export default function CreatorQuestDetail({
       {pauseConfirmOpen && (
         <div className="brutal-border mb-4 bg-[#1A1330] p-4">
           <p className="mb-3 text-sm text-foreground">
-            Pause this quest? Hunters will no longer be able to submit new
+            Pause this mission? Hunters will no longer be able to submit new
             feedback. Existing escrow stays locked and submissions already
             received can still be approved or rejected.
           </p>
@@ -442,7 +442,7 @@ export default function CreatorQuestDetail({
       {cancelConfirmOpen && (
         <div className="brutal-border mb-4 bg-[#1A1330] p-4">
           <p className="mb-1 text-sm text-foreground">
-            Cancel this quest? This closes it permanently — no further
+            Cancel this mission? This closes it permanently — no further
             submissions, approvals, or payouts will be possible.
           </p>
           <p className="mb-3 text-sm font-semibold text-foreground">
@@ -466,7 +466,7 @@ export default function CreatorQuestDetail({
               disabled={missionActionPending !== null}
               className="border border-foreground bg-background px-4 py-2 text-sm text-foreground transition-colors hover:brutal-border"
             >
-              Keep Quest
+              Keep Mission
             </button>
           </div>
         </div>
@@ -477,13 +477,13 @@ export default function CreatorQuestDetail({
           the response count stops moving. */}
       {isMissionPaused && (
         <div className="mb-6 bg-yellow-500/10 border border-yellow-500/30 px-4 py-3 text-sm text-yellow-300">
-          This quest is paused. Hunters cannot submit new feedback until you
+          This mission is paused. Hunters cannot submit new feedback until you
           resume it; existing submissions can still be approved or rejected.
         </div>
       )}
       {effectiveStatus === "cancelled" && (
         <div className="mb-6 bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-300">
-          This quest is cancelled. No further submissions, approvals, or
+          This mission is cancelled. No further submissions, approvals, or
           payouts can happen.
         </div>
       )}
@@ -606,11 +606,11 @@ export default function CreatorQuestDetail({
                     approveDisabled={!canPay || isMissionClosed}
                     approveDisabledReason={
                       isMissionClosed
-                        ? "This quest is cancelled or completed — no further payouts"
+                        ? "This mission is cancelled or completed — no further payouts"
                         : isNetworkMismatch
                           ? "Switch your wallet to the correct network to pay out"
                           : !isOwner
-                            ? "Only the quest founder can release a payout"
+                            ? "Only the mission creator can release a payout"
                             : undefined
                     }
                   />

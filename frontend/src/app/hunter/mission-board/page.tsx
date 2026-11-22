@@ -54,9 +54,9 @@ function mapMission(mission: PublicMission, index: number): Mission {
     id: mission.id,
     brand:
       mission.owner?.displayName ||
-      (mission.owner?.address ? shortAddress(mission.owner.address) : "Quid Founder"),
+      (mission.owner?.address ? shortAddress(mission.owner.address) : "Quid Creator"),
     title: mission.title,
-    category: typeof metadata.category === "string" ? metadata.category : "Product Quest",
+    category: typeof metadata.category === "string" ? metadata.category : "Product Mission",
     reward: `${Number(mission.rewardAmount) || 0} XLM`,
     posted: `Posted ${getRelativeTime(mission.createdAt)}`,
     icon: MISSION_ICONS[index % MISSION_ICONS.length],
@@ -126,7 +126,7 @@ export default function MissionBoardPage() {
               Mission Board
             </h1>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
-              Browse available quests from Stellar builders, give feedback, and earn rewards.
+              Browse open missions from Stellar builders, test their dApps, and earn rewards.
             </p>
           </div>
           <button
@@ -162,7 +162,7 @@ export default function MissionBoardPage() {
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search missions or founders..."
+              placeholder="Search missions or creators..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full brutal-border bg-card py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"

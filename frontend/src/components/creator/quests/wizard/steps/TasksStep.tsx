@@ -125,13 +125,13 @@ export default function TasksStep({
 
           <div>
             <FieldLabel htmlFor={`task-instruction-${task.id}`}>
-              Participant instruction
+              Hunter instructions
             </FieldLabel>
             <TextArea
               id={`task-instruction-${task.id}`}
               value={task.instruction}
               onChange={(instruction) => updateTask(task.id, { instruction })}
-              placeholder="Explain exactly what participants should submit."
+              placeholder="Explain exactly what hunters should submit."
             />
           </div>
         </div>

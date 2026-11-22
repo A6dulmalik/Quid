@@ -6,9 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiSolidWallet } from "react-icons/bi";
 import { HiMenu, HiX } from "react-icons/hi";
-import { RiFileList3Line } from "react-icons/ri";
+import { RiBankLine, RiFileList3Line } from "react-icons/ri";
 import { TbLayoutDashboard } from "react-icons/tb";
-import { LuClipboardCheck } from "react-icons/lu";
+import { LuClipboardCheck, LuScale } from "react-icons/lu";
+import { ComingSoonNavItem } from "@/components/ui/coming-soon";
 
 const navItems = [
   { href: "/hunter", label: "Dashboard", icon: TbLayoutDashboard },
@@ -78,10 +79,20 @@ export default function Sidebar() {
           })}
         </nav>
 
+        <div className="mt-6 border-t-[3px] border-foreground pt-4">
+          <p className="mb-2 pl-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+            Coming soon
+          </p>
+          <div className="flex flex-col gap-1">
+            <ComingSoonNavItem feature="disputes" icon={LuScale} />
+            <ComingSoonNavItem feature="sep24-cashout" icon={RiBankLine} />
+          </div>
+        </div>
+
         <div className="mt-auto brutal-border brutal-shadow bg-brutal-orange p-4 text-sm">
           <p className="font-black uppercase tracking-wide">Hunter mode</p>
           <p className="mt-2 text-xs font-medium text-muted-foreground">
-            Complete missions and track every XLM reward.
+            Test Stellar dApps, file reports, and track every reward you earn.
           </p>
         </div>
       </aside>

@@ -7,18 +7,18 @@ const steps = [
   {
     id: "1",
     number: "01",
-    title: "Browse the Category",
+    title: "Pick a Mission",
     description:
-      "Explore topics that matter to you and discover surveys tailored to your interests.",
+      "Browse open missions from Stellar and Soroban teams and pick one that fits your skills.",
     image: "/step1.jpg",
     cta: "Click here to start",
   },
   {
     id: "2",
     number: "02",
-    title: "Complete the Survey",
+    title: "Test and Report",
     description:
-      "Share your thoughts by answering quick surveys and help shape ideas and products.",
+      "Follow the test plan, then submit a bug or UX report with screenshots. It's pinned to IPFS.",
     image: "/step2.jpg",
     cta: "Click here to start",
   },
@@ -26,7 +26,7 @@ const steps = [
     id: "3",
     number: "03",
     title: "Get Rewarded",
-    description: "Receive XLM rewards instantly",
+    description: "When the creator approves your report, the reward is paid from on-chain escrow.",
     image: "/step3.jpg",
     cta: "Click here to start",
   },
@@ -83,7 +83,7 @@ export const HowItWorksSection = () => {
           className="text-3xl font-black uppercase leading-tight sm:text-4xl md:text-5xl"
           variants={headerVariants}
         >
-          Have a Quest Setup in just 3 steps
+          From mission to payout in 3 steps
         </motion.h2>
       </motion.div>
 
@@ -150,7 +150,7 @@ export const HowItWorksSection = () => {
           type="button"
           className="brutal-border brutal-shadow cursor-pointer bg-brutal-lime px-8 py-3 text-sm font-black uppercase tracking-wide text-foreground"
         >
-          Explore Quests
+          Browse Missions
         </button>
       </motion.div>
     </motion.section>

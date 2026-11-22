@@ -198,7 +198,7 @@ export async function createMission(
     maxParticipants < 1 ||
     maxParticipants > 0xffffffff
   ) {
-    throw new Error("Participant limit must be between 1 and 4,294,967,295.");
+    throw new Error("Hunter limit must be between 1 and 4,294,967,295.");
   }
 
   try {

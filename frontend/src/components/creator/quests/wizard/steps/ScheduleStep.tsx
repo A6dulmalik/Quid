@@ -29,7 +29,7 @@ export default function ScheduleStep({
         >
           <p className="text-sm font-semibold text-foreground">Publish immediately</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Make this quest available when published.
+            Make this mission available when published.
           </p>
         </button>
         <button
@@ -94,7 +94,7 @@ export default function ScheduleStep({
       <Checkbox
         checked={data.autoCloseWhenFull}
         onChange={(autoCloseWhenFull) => onChange({ autoCloseWhenFull })}
-        label="Close automatically when the participant limit is reached"
+        label="Close automatically when the hunter limit is reached"
       />
     </div>
   );

@@ -21,7 +21,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
   const stats = [
     {
       icon: PaperIcon,
-      label: "Active Quests",
+      label: "Active Missions",
       value: activeQuests,
       bg: "bg-brutal-yellow",
     },

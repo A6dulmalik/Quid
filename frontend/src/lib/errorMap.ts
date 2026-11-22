@@ -28,19 +28,19 @@ export interface QuidErrorInfo {
 export const QUID_ERROR_MAP: Record<QuidErrorCode, QuidErrorInfo> = {
   /** MissionNotFound = 1 */
   1: {
-    title: 'Quest not found',
-    description: 'The quest you are trying to interact with no longer exists on-chain.',
+    title: 'Mission not found',
+    description: 'The mission you are trying to interact with no longer exists on-chain.',
     retryable: false,
   },
   /** MissionClosed = 2 – covers PAUSED / CANCELLED / COMPLETED */
   2: {
-    title: 'Quest is closed',
-    description: 'This quest has been paused or closed by the founder. New submissions are not accepted.',
+    title: 'Mission is closed',
+    description: 'This mission has been paused or closed by the creator. New submissions are not accepted.',
     retryable: false,
   },
   /** MissionFull = 3 – capacity error */
   3: {
-    title: 'Quest is full',
+    title: 'Mission is full',
     description: 'The maximum number of hunters has been reached for this quest. Try a different one.',
     retryable: false,
   },
@@ -59,7 +59,7 @@ export const QUID_ERROR_MAP: Record<QuidErrorCode, QuidErrorInfo> = {
   /** NotAuthorized = 6 */
   6: {
     title: 'Not authorized',
-    description: 'You are not authorized to perform this action. Only the quest founder can approve or reject.',
+    description: 'You are not authorized to perform this action. Only the mission creator can approve or reject.',
     retryable: false,
   },
   /** NegativeReward = 7 */
@@ -70,8 +70,8 @@ export const QUID_ERROR_MAP: Record<QuidErrorCode, QuidErrorInfo> = {
   },
   /** InvalidState = 8 – generic state machine violation */
   8: {
-    title: 'Invalid quest state',
-    description: 'This action cannot be performed while the quest is in its current state.',
+    title: 'Invalid mission state',
+    description: 'This action cannot be performed while the mission is in its current state.',
     retryable: false,
   },
   /** AlreadyPaid = 9 */
@@ -82,7 +82,7 @@ export const QUID_ERROR_MAP: Record<QuidErrorCode, QuidErrorInfo> = {
   },
   /** MissionNotOpen = 10 – submit blocked because mission is PAUSED */
   10: {
-    title: 'Quest is paused',
+    title: 'Mission is paused',
     description: 'The founder has paused this quest. Submissions are temporarily blocked.',
     retryable: false,
   },
@@ -155,19 +155,19 @@ export const QUID_ERROR_MAP: Record<QuidErrorCode, QuidErrorInfo> = {
   /** ExpiryInThePast = 22 */
   22: {
     title: 'Invalid deadline',
-    description: 'The quest deadline must be in the future.',
+    description: 'The mission deadline must be in the future.',
     retryable: true,
   },
   /** MissionExpired = 23 */
   23: {
-    title: 'Quest expired',
-    description: 'This quest’s deadline has passed and it no longer accepts submissions.',
+    title: 'Mission expired',
+    description: 'This mission’s deadline has passed and it no longer accepts submissions.',
     retryable: false,
   },
   /** MissionNotExpired = 24 */
   24: {
-    title: 'Quest not expired',
-    description: 'This quest has not reached its deadline yet, so its escrow cannot be reclaimed.',
+    title: 'Mission not expired',
+    description: 'This mission has not reached its deadline yet, so its escrow cannot be reclaimed.',
     retryable: false,
   },
   /** ReputationNotSet = 25 */
