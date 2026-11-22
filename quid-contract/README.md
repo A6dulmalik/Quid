@@ -428,6 +428,35 @@ experiments.
 A `contracts/hello-world` scaffold used to live here and was removed; see the
 note under [Prerequisites](#prerequisites).
 
+### Adding a contract
+
+1. Create `contracts/<quid-name>/` with the same layout as the others:
+   `Cargo.toml`, `src/lib.rs`, `src/error.rs`, `src/types.rs`, `src/test.rs`.
+2. Copy `Cargo.toml` from an existing contract (e.g. `quid-tip-jar`) and change
+   only `name`. Keep `soroban-sdk = { workspace = true }`, `crate-type = ["lib", "cdylib"]`
+   and `publish = false`. Don't pin a different SDK version.
+3. Don't edit the workspace `Cargo.toml`. The `contracts/*` glob picks it up.
+4. Add a row to the [Contracts](#contracts) table only once the contract is
+   meant to ship.
+
+### Adding a module to an existing contract
+
+Keep `#[contractimpl]` entrypoints in `lib.rs` and put the logic behind them in
+its own file, so parallel PRs don't all edit the same lines. `quid-store`
+already declares empty extension modules for upcoming work:
+
+| File | For |
+|------|-----|
+| `quid-store/src/fees.rs` | Protocol fee logic (tiers, caps, fee on payout) |
+| `quid-store/src/stream.rs` | Streamed or vested payouts |
+| `quid-store/src/guardian.rs` | Guardian role and emergency pause |
+| `quid-store/src/upgrade.rs` | Admin-gated wasm upgrade and storage migration |
+
+For another contract, add `mod <name>;` next to `mod error;` in its `lib.rs`
+in the same PR that adds the file. New storage keys go in that contract's
+`types::DataKey`. Use persistent storage with `extend_ttl` for per-record data
+and instance storage only for small config values.
+
 ## Related docs
 
 - Root: [../README.md](../README.md) — start with the [Deploy Checklist](../README.md#deploy-checklist)

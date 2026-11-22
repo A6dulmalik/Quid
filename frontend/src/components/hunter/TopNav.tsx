@@ -8,15 +8,15 @@ import { Bell, ChevronDown } from "lucide-react";
 const topNavItems = [
   {
     href: "/hunter/mission-board",
-    label: "Quest",
+    label: "Missions",
   },
   {
     href: "/hunter/my-submissions",
-    label: "Bookmark",
+    label: "My Submissions",
   },
   {
     href: "/hunter",
-    label: "Leaderboard",
+    label: "Overview",
   },
 ];
 

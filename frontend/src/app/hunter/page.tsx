@@ -26,7 +26,7 @@ export default function HunterDashboard() {
             Welcome back, Samuel
           </h1>
           <p className="mt-4 text-base font-medium text-muted-foreground sm:text-lg">
-            Take a quest to start earning
+            Take a mission to start earning
           </p>
         </div>
       </section>

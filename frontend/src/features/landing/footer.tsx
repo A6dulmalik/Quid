@@ -52,7 +52,7 @@ export default function Footer() {
     }
   };
 
-  const platformLinks = ["Create Quest", "Take Quest"];
+  const platformLinks = ["Launch a Mission", "Browse Missions"];
   const resourceLinks = ["Documentation", "API Reference", "Support", "Blog"];
   const communityLinks = ["Discord", "X", "GitHub", "Forum"];
 

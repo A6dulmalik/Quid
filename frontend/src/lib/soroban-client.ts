@@ -387,7 +387,7 @@ export async function pauseMissionToContract({
     "pause_mission",
     [nativeToScVal(BigInt(missionId), { type: "u64" })],
     ownerAddress,
-    "pause this quest",
+    "pause this mission",
   );
 
   return { success: true, txHash, missionId: missionId.toString() };
@@ -408,7 +408,7 @@ export async function cancelMissionToContract({
     "cancel_mission",
     [nativeToScVal(BigInt(missionId), { type: "u64" })],
     ownerAddress,
-    "cancel this quest",
+    "cancel this mission",
   );
 
   return { success: true, txHash, missionId: missionId.toString() };

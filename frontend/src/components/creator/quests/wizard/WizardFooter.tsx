@@ -56,7 +56,7 @@ export default function WizardFooter({
           onClick={onContinue}
           className="flex items-center gap-1.5  bg-[#8B5CF6] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-muted-foreground"
         >
-          {publishing ? "Publishing…" : isLastStep ? "Publish quest" : "Continue"}
+          {publishing ? "Publishing…" : isLastStep ? "Publish mission" : "Continue"}
           <ArrowRight className="size-4" />
         </button>
       </div>

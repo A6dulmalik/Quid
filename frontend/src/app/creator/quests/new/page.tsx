@@ -31,7 +31,7 @@ export default function CreateQuestPage() {
       <div className="fixed inset-0 z-50">
         <button
           type="button"
-          aria-label="Close quest creator"
+          aria-label="Close mission creator"
           onClick={() => router.push("/creator/quests")}
           className="absolute inset-0 bg-black/60 backdrop-blur-[1px]"
         />

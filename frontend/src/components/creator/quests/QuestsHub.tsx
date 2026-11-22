@@ -25,7 +25,7 @@ interface MissionResponse {
 }
 
 const TABS: { key: QuestTabKey; label: string }[] = [
-  { key: "active", label: "Active Quest" },
+  { key: "active", label: "Active Missions" },
   { key: "drafted", label: "Drafted" },
   { key: "completed", label: "Completed" },
 ];
@@ -118,7 +118,7 @@ export default function QuestsHub() {
     try {
       const response = await creatorApiFetch("/missions/me", publicKey);
       if (!response.ok) {
-        throw new Error(`Unable to load quests (${response.status})`);
+        throw new Error(`Unable to load missions (${response.status})`);
       }
 
       const missions = (await response.json()) as MissionResponse[];
@@ -127,7 +127,7 @@ export default function QuestsHub() {
       setError(
         loadError instanceof Error
           ? loadError.message
-          : "Unable to load your quests",
+          : "Unable to load your missions",
       );
     } finally {
       setLoading(false);
@@ -154,7 +154,7 @@ export default function QuestsHub() {
     <div>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-foreground">Quests</h1>
+          <h1 className="text-xl font-semibold text-foreground">Missions</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Create, manage and review your participation campaigns.
           </p>
@@ -163,14 +163,14 @@ export default function QuestsHub() {
           href="/creator/quests/new"
           className="inline-flex shrink-0 items-center justify-center  bg-[#8B5CF6] px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0]"
         >
-          + Add new Quest
+          + Add new Mission
         </Link>
       </div>
 
       <div
         className="flex gap-6 border-b border-foreground/30 text-sm font-medium text-muted-foreground"
         role="tablist"
-        aria-label="Quest status"
+        aria-label="Mission status"
       >
         {TABS.map((tab) => {
           const isActive = activeTab === tab.key;
@@ -208,7 +208,7 @@ export default function QuestsHub() {
         {!connected || !publicKey ? (
           <EmptyState
             title="Wallet Not Connected"
-            description="Connect your wallet to load and manage your quests."
+            description="Connect your wallet to load and manage your missions."
             action={{
               label: "Connect wallet",
               onClick: () => void connect(),
@@ -233,8 +233,8 @@ export default function QuestsHub() {
             <EmptyActiveQuests />
           ) : (
             <EmptyState
-              title={`No ${activeTab} quests`}
-              description={`You don't have any ${activeTab} quests right now.`}
+              title={`No ${activeTab} missions`}
+              description={`You don't have any ${activeTab} missions right now.`}
               variant="compact"
             />
           )

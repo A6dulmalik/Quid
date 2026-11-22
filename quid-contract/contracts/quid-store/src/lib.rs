@@ -13,6 +13,14 @@ use soroban_sdk::{
 mod error;
 mod types;
 
+// Extension points. Keep new internal logic in these modules so parallel PRs
+// don't all edit lib.rs. Public entrypoints still go in the #[contractimpl]
+// block below and call into them.
+mod fees;
+mod guardian;
+mod stream;
+mod upgrade;
+
 use error::QuidError;
 use soroban_sdk::token;
 use types::{DataKey, Mission, MissionStatus, Submission, SubmissionStatus};

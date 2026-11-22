@@ -24,7 +24,7 @@ const QuestHeader = () => {
 
       {/* Quests Title */}
       <h1 className="flex-1 text-xl font-bold text-center md:text-left md:flex-none">
-        Quests
+        Missions
       </h1>
 
       {/* Desktop Menu */}

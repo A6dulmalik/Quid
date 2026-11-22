@@ -33,8 +33,8 @@ interface Quest {
 
 const tabs: Array<{ id: QuestTab; label: string; count?: number }> = [
   { id: "for-you", label: "For You" },
-  { id: "all-quest", label: "All Quest" },
-  { id: "my-quest", label: "My Quest", count: 2 },
+  { id: "all-quest", label: "All Missions" },
+  { id: "my-quest", label: "My Missions", count: 2 },
 ];
 
 const forYouQuests: Quest[] = [
@@ -175,7 +175,7 @@ export default function HunterQuestTabs() {
     : quests;
 
   const tabLabel = useMemo(
-    () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Quests",
+    () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Missions",
     [activeTab],
   );
 
@@ -204,11 +204,11 @@ export default function HunterQuestTabs() {
   };
 
   return (
-    <section aria-label={`${tabLabel} quests`}>
+    <section aria-label={`${tabLabel} missions`}>
       <div
         className="mt-6 flex gap-8 border-b border-foreground/30 text-lg font-semibold text-muted-foreground"
         role="tablist"
-        aria-label="Quest filters"
+        aria-label="Mission filters"
       >
         {tabs.map((tab) => {
           const isActive = tab.id === activeTab;
@@ -250,18 +250,18 @@ export default function HunterQuestTabs() {
               title={
                 activeTab === "my-quest"
                   ? "No Active Participations"
-                  : "No Quests Available"
+                  : "No Missions Available"
               }
               description={
                 activeTab === "my-quest"
-                  ? "You haven't participated in any quests yet. Take a quest from 'For You' or 'All Quest' to start earning."
-                  : "No quests are currently available in this category. Check back later."
+                  ? "You haven't joined any missions yet. Take a mission from 'For You' or 'All Missions' to start earning."
+                  : "No missions are currently available in this category. Check back later."
               }
               variant="card"
               action={
                 activeTab === "my-quest"
                   ? {
-                      label: "Browse All Quests",
+                      label: "Browse All Missions",
                       onClick: () => {
                         setActiveTab("all-quest");
                         setAllQuestPage(1);
@@ -332,7 +332,7 @@ function QuestRow({
         <div className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
           <span className="flex items-center gap-2">
             <BriefcaseBusiness className="size-4" />
-            Product Quest
+            Product Mission
           </span>
           {quest.responses ? <span>{quest.responses}</span> : null}
           <span>{quest.due}</span>
@@ -361,7 +361,7 @@ function QuestRow({
           <PendingBadge />
         ) : isPaused ? (
           <span className="text-xs font-medium text-yellow-400">
-            Paused by founder
+            Paused by creator
           </span>
         ) : !isSubmitted ? (
           <button
@@ -397,7 +397,7 @@ function Pagination({
     <div className="mt-auto flex flex-col items-center pt-12">
       <nav
         className="flex items-center justify-center gap-6 text-sm text-foreground"
-        aria-label="All quest pages"
+        aria-label="All mission pages"
       >
         <button
           type="button"

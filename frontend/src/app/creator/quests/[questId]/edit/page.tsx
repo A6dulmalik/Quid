@@ -79,7 +79,7 @@ export default function EditQuestPage({ params }: { params: Promise<{ questId: s
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">Edit Quest</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">Edit Mission</h1>
           <p className="text-foreground">Quest ID: {questId}</p>
         </div>
 
@@ -98,7 +98,7 @@ export default function EditQuestPage({ params }: { params: Promise<{ questId: s
         <form onSubmit={handleSubmit} className="brutal-border brutal-shadow bg-card p-6 md:p-8 space-y-6">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium mb-2">Quest Title</label>
+            <label className="block text-sm font-medium mb-2">Mission Title</label>
             <input
               type="text"
               name="title"

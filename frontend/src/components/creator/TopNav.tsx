@@ -13,7 +13,7 @@ const topNavItems = [
   },
   {
     href: "/creator/quests",
-    label: "Quests",
+    label: "Missions",
   },
   {
     href: "/creator/wallet",

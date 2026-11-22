@@ -8,39 +8,39 @@ import QuidLogo from "@/components/brand/QuidLogo";
 
 const heroStats = [
   {
-    value: "2.5k+",
-    label: "Quests Completed",
+    value: "Escrow",
+    label: "Rewards locked in Soroban",
   },
-  { value: "120k+", label: "Verified Participants" },
-  { value: "1.2M+", label: "Rewards Distributed" },
+  { value: "IPFS", label: "Reports pinned, CID on-chain" },
+  { value: "SEP-10", label: "Wallet-verified hunters" },
 ];
 
 const cardSlides = [
   {
-    title: "Download and test the latest Ruze.stellar 2.0",
+    title: "Test the swap flow on a Soroban DEX",
     description:
-      "Share your experiences with decentralized applications and help improve the ecosystem.",
+      "Run swaps on testnet with edge-case amounts and file a report for anything that breaks.",
     time: "~10 minutes",
     questions: "12",
-    cta: "Take Quest",
+    cta: "Take Mission",
     reward: "10 XLM",
   },
   {
-    title: "Get community-verified insights fast",
+    title: "Launch a QA mission for your dApp",
     description:
-      "Launch a gated survey and see verified responses from real Stellar users.",
+      "Set a reward, gate who can join, and get bug and UX reports from wallet-verified Stellar users.",
     time: "~6 minutes",
     questions: "8",
-    cta: "Create Quest",
-    reward: "2.5k views",
+    cta: "Launch Mission",
+    reward: "XLM / USDC",
   },
   {
-    title: "Collect feedback on your next release",
+    title: "Run a UX review before mainnet",
     description:
-      "Invite contributors, reward them, and ship with confidence in your roadmap.",
+      "Hunters walk through onboarding and wallet connect, then file reports with screenshots.",
     time: "~14 minutes",
     questions: "16",
-    cta: "Start Quest",
+    cta: "Start Mission",
     reward: "24 XLM",
   },
 ];
@@ -118,10 +118,10 @@ export default function HeroSection() {
             <div className="hidden h-6 w-[3px] bg-foreground md:block" />
             <div className="hidden items-center gap-6 text-sm font-bold uppercase tracking-wide md:flex">
               <motion.span className="cursor-pointer hover:text-brutal-violet">
-                For Builders
+                For Creators
               </motion.span>
               <motion.span className="cursor-pointer hover:text-brutal-pink">
-                For Contributors
+                For Hunters
               </motion.span>
               <motion.span className="cursor-pointer hover:text-brutal-cyan">
                 About
@@ -191,13 +191,13 @@ export default function HeroSection() {
                     className="cursor-pointer hover:text-brutal-violet transition-colors"
                     whileHover={{ x: 4 }}
                   >
-                    For Builders
+                    For Creators
                   </motion.span>
                   <motion.span
                     className="cursor-pointer hover:text-brutal-violet transition-colors"
                     whileHover={{ x: 4 }}
                   >
-                    For Contributors
+                    For Hunters
                   </motion.span>
                   <motion.span
                     className="cursor-pointer hover:text-brutal-violet transition-colors"
@@ -232,19 +232,19 @@ export default function HeroSection() {
           >
             <motion.div className="space-y-6 cursor-default" variants={itemVariants}>
               <motion.h1
-                className="text-4xl font-black uppercase leading-[1.05] tracking-tight sm:text-5xl lg:text-[56px]"
+                className="text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[48px]"
                 variants={headingVariants}
               >
-                Launch Better Stellar Products With{" "}
-                <span className="bg-brutal-yellow px-2">Real User Insight</span>
+                The On-Chain Verified{" "}
+                <span className="bg-brutal-yellow px-2">QA &amp; UX Testing</span>{" "}Platform for Stellar &amp; Soroban Builders
               </motion.h1>
               <motion.p
                 className="max-w-xl text-base font-medium text-muted-foreground sm:text-lg"
                 variants={itemVariants}
               >
-                Quid lets Stellar builders create gated feedback quests where
-                real community members test early products, complete surveys,
-                and earn rewards — all verified on-chain.
+                Creators post QA and UX testing missions with rewards escrowed on
+                Soroban. Hunters test the dApp, file reproducible bug and UX reports,
+                and get paid on-chain when the creator approves their work.
               </motion.p>
             </motion.div>
 
@@ -257,13 +257,13 @@ export default function HeroSection() {
                 className="h-11 min-w-[149px] cursor-pointer brutal-border brutal-shadow bg-brutal-pink px-5 text-sm font-bold uppercase tracking-wide text-foreground transition hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_#0a0a0a]"
                 whileTap={{ scale: 0.98 }}
               >
-                Create a Quest
+                Launch a Mission
               </motion.button>
               <motion.button
                 className="flex h-11 min-w-[158px] cursor-pointer items-center justify-center gap-2 brutal-border brutal-shadow bg-brutal-cyan px-4 text-sm font-bold uppercase tracking-wide text-foreground"
                 whileTap={{ scale: 0.98 }}
               >
-                Explore Quests
+                Browse Missions
                 <motion.div whileHover={{ x: 2 }} transition={{ duration: 0.2 }}>
                   <Image
                     src="/Arrow - Right.png"
@@ -341,7 +341,7 @@ export default function HeroSection() {
                   <div className="flex flex-col items-center justify-between text-xs text-muted-foreground">
                     <div className="flex items-center justify-between w-full text-[1rem] mb-4">
                       <span>Time: {activeSlide.time}</span>
-                      <span>Questions: {activeSlide.questions}</span>
+                      <span>Tasks: {activeSlide.questions}</span>
                     </div>
                     <motion.button
                       className="flex h-14 w-full cursor-pointer items-center justify-between brutal-border brutal-shadow bg-brutal-lime px-4 text-base font-black uppercase text-foreground"

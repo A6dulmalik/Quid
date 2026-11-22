@@ -5,9 +5,9 @@ import { motion, Variants } from "framer-motion";
 import { brutalCardColors } from "@/lib/brutalist";
 
 const featureItems = [
-  { title: "Custom Template", icon: "/Frame 56.png" },
-  { title: "Diverse Audience", icon: "/Frame 57.png" },
-  { title: "Cost Efficient", icon: "/Frame 58.png" },
+  { title: "Mission Templates", icon: "/Frame 56.png" },
+  { title: "Verified Hunters", icon: "/Frame 57.png" },
+  { title: "Escrowed Rewards", icon: "/Frame 58.png" },
 ];
 
 const containerVariants: Variants = {
@@ -60,15 +60,15 @@ export default function FeatureHighlights() {
             className="text-4xl font-black uppercase leading-tight lg:text-5xl"
             variants={headingVariants}
           >
-            Save time. Work smarter. Get{" "}
-            <span className="bg-brutal-cyan px-2">answers.</span>
+            Ship fewer bugs. Get{" "}
+            <span className="bg-brutal-cyan px-2">verified reports.</span>
           </motion.h2>
           <motion.p
             className="mx-auto max-w-2xl text-base font-medium text-muted-foreground"
             variants={headingVariants}
           >
-            From quick UX tests to in-depth interviews — real feedback, real
-            quick.
+            From quick smoke tests to full UX reviews, every report comes from a
+            wallet-verified hunter.
           </motion.p>
         </motion.div>
 

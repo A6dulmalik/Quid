@@ -8,72 +8,72 @@ import { brutalCardColors } from "@/lib/brutalist";
 const opportunityCards = [
   {
     id: 1,
-    title: "Web3 User Experience",
+    title: "Soroban DEX Swap Flow",
     description:
-      "Share your experiences with decentralized applications and help improve the ecosystem.",
+      "Run test swaps on testnet with edge-case amounts and report anything that fails or confuses you.",
     time: "~15 min",
     questions: "8",
     reward: "10 XLM",
   },
   {
     id: 2,
-    title: "Blockchain Usability",
+    title: "Wallet Onboarding Review",
     description:
-      "Participate in user testing sessions for blockchain platforms and contribute to enhancing usability.",
+      "Walk through first-time wallet connect and account funding, then report every point of friction.",
     time: "~20 min",
     questions: "12",
     reward: "15 XLM",
   },
   {
     id: 3,
-    title: "AI-Powered Chatbot Feedback",
+    title: "Smart Contract Edge Cases",
     description:
-      "Engage with an AI chatbot and share insights on its conversational abilities.",
+      "Call a contract's entrypoints with unusual inputs and report reverts, wrong errors, or bad state.",
     time: "~10 min",
     questions: "6",
     reward: "8 XLM",
   },
   {
     id: 4,
-    title: "E-Commerce Experience",
+    title: "USDC Payments Checkout",
     description:
-      "Complete a survey focused on your recent online shopping experiences.",
+      "Send and receive testnet USDC and check that balances, memos, and receipts are correct.",
     time: "~18 min",
     questions: "10",
     reward: "12 XLM",
   },
   {
     id: 5,
-    title: "Mobile App Usability",
+    title: "Mobile dApp Usability",
     description:
-      "Test a new mobile app and provide feedback on its design and functionality.",
+      "Test a Stellar dApp on your phone and report layout, tap-target, and performance problems.",
     time: "~15 min",
     questions: "9",
     reward: "11 XLM",
   },
   {
     id: 6,
-    title: "Virtual Reality Interface",
+    title: "Anchor Deposit Flow",
     description:
-      "Participate in testing a VR application and evaluate its user interface.",
+      "Try a SEP-24 deposit on testnet and report where the flow stalls or the instructions are unclear.",
     time: "~25 min",
     questions: "14",
     reward: "18 XLM",
   },
   {
     id: 7,
-    title: "Health Tracking App",
+    title: "NFT Mint and Transfer",
     description:
-      "Use a health tracking app and share your thoughts on features and layout.",
+      "Mint and transfer a testnet NFT, then report anything that doesn't match the docs.",
     time: "~12 min",
     questions: "7",
     reward: "9 XLM",
   },
   {
     id: 8,
-    title: "Social Media Platform Feedback",
+    title: "Accessibility Audit",
     description:
-      "Explore new features in a social media platform and provide constructive feedback.",
+      "Complete a core flow with only a keyboard and screen reader, and report what blocks you.",
     time: "~16 min",
     questions: "11",
     reward: "13 XLM",
@@ -124,7 +124,7 @@ export default function OpportunitiesSection() {
             className="text-3xl font-black uppercase leading-tight sm:text-4xl md:text-5xl"
             variants={headerVariants}
           >
-            Looking to earn money taking surveys?
+            Want to get paid to test Stellar dApps?
           </motion.h2>
           <motion.h3
             className="text-2xl font-black uppercase text-brutal-violet sm:text-3xl"
@@ -136,8 +136,8 @@ export default function OpportunitiesSection() {
             className="mt-2 max-w-2xl text-base font-medium text-muted-foreground sm:text-lg"
             variants={headerVariants}
           >
-            Discover feedback opportunities from leading companies. Complete tasks on
-            your schedule and earn rewards directly to your wallet.
+            Pick a mission from a Stellar or Soroban team, test on your own schedule,
+            and get paid to your wallet when your report is approved.
           </motion.p>
         </motion.div>
 
@@ -190,7 +190,7 @@ export default function OpportunitiesSection() {
           whileTap={{ scale: 0.98 }}
           variants={cardVariants}
         >
-          Explore Quests
+          Browse Missions
         </motion.button>
       </motion.div>
     </section>

@@ -110,7 +110,7 @@ export default function QuestWizard({
     if (!response.ok) {
       const detail = await response.text().catch(() => "");
       throw new Error(
-        `Could not save the quest draft (${response.status}): ${detail || response.statusText}`,
+        `Could not save the mission draft (${response.status}): ${detail || response.statusText}`,
       );
     }
 
@@ -125,12 +125,12 @@ export default function QuestWizard({
     try {
       await saveDraftRecord();
       toast.success("Draft saved successfully.", {
-        description: `Draft "${data.basics.title || "Untitled quest"}" has been saved.`,
+        description: `Draft "${data.basics.title || "Untitled mission"}" has been saved.`,
       });
       window.location.href = "/creator/quests";
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Could not save the quest draft.",
+        error instanceof Error ? error.message : "Could not save the mission draft.",
       );
     }
   }
@@ -274,7 +274,7 @@ export default function QuestWizard({
 
       <div className="px-6">
         <h1 className="mb-4 text-xl font-semibold text-foreground">
-          {data.basics.title || "Create a quest"}
+          {data.basics.title || "Create a mission"}
         </h1>
         <WizardStepper
           currentIndex={currentIndex}

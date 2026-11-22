@@ -142,7 +142,7 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-foreground">Mission Submissions & Feedback:</strong> Responses,
-                ratings, bug reports, and survey answers you provide during feedback quests.
+                ratings, bug reports, and survey answers you provide during testing missions.
               </li>
               <li>
                 <strong className="text-foreground">Proof Files & Attachments:</strong> Screenshots,
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
                 system.
               </li>
               <li>
-                To enable founders to review hunter feedback and approve milestone payouts.
+                To enable creators to review hunter feedback and approve milestone payouts.
               </li>
               <li>
                 To prevent fraud, automated bot farming, and Sybil attacks on the platform.

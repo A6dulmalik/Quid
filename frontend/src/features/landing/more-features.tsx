@@ -6,15 +6,15 @@ import { brutalBtnPrimary } from "@/lib/brutalist-classes";
 
 const badges = [
   {
-    text: "Get community-verified insights",
+    text: "Wallet-verified test reports",
     className: "left-6 top-[-30px] px-5 py-4 w-[300px] bg-brutal-cyan",
   },
   {
-    text: "Exportable feedback data",
+    text: "Reports pinned to IPFS",
     className: "right-[30px] top-[52%] -translate-y-1/2 px-5 py-4 w-[200px] bg-brutal-yellow",
   },
   {
-    text: "Create quest-based surveys",
+    text: "Structured QA missions",
     className: "left-[-20px] bottom-[-10px] px-5 py-4 w-[300px] bg-brutal-lime",
   },
 ];
@@ -141,8 +141,8 @@ export default function MoreFeatures() {
             variants={headingVariants}
           >
             Everything You Need to Run{" "}
-            <span className="bg-brutal-yellow px-2">Community-Verified</span>{" "}
-            Feedback Quests
+            <span className="bg-brutal-yellow px-2">On-Chain Verified</span>{" "}
+            QA Missions
           </motion.h2>
 
           <motion.div
@@ -153,12 +153,12 @@ export default function MoreFeatures() {
             viewport={{ once: true, amount: 0.3 }}
           >
             <motion.p className="text-base font-medium text-muted-foreground" variants={headingVariants}>
-              Create stellar products using real feedback from real community users.
+              Ship Stellar products tested by real, wallet-verified users.
             </motion.p>
             <motion.p className="text-base text-muted-foreground" variants={headingVariants}>
-              Quid helps Stellar creators validate ideas faster by turning their community
-              into contributors. Create quests, gate access, collect structured feedback,
-              and reward participants — all without friction.
+              Quid helps Stellar and Soroban creators find bugs and UX problems before
+              mainnet. Launch missions, gate who can join, collect structured test reports,
+              and pay hunters straight from on-chain escrow.
             </motion.p>
           </motion.div>
 
@@ -167,7 +167,7 @@ export default function MoreFeatures() {
             whileTap={{ scale: 0.98 }}
             variants={headingVariants}
           >
-            Create a Quest
+            Launch a Mission
           </motion.button>
         </motion.div>
       </div>

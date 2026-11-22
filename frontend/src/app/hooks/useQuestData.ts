@@ -118,7 +118,7 @@ export function useQuestData(questId: string) {
     try {
       const response = await fetch(`${getApiBaseUrl()}/missions/${questId}`);
       if (!response.ok) {
-        throw new Error(`Unable to load quest (${response.status})`);
+        throw new Error(`Unable to load mission (${response.status})`);
       }
 
       const mission = (await response.json()) as MissionDetailResponse;
@@ -163,7 +163,7 @@ export function useQuestData(questId: string) {
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load this quest");
+      setError(err instanceof Error ? err.message : "Unable to load this mission");
       setQuest(null);
       setSubmissions([]);
     } finally {

@@ -20,11 +20,11 @@ const PRIMARY_ACTION: Record<
     href: (id) => `/creator/quests/${id}`,
   },
   drafted: {
-    label: "Edit quest",
+    label: "Edit mission",
     href: (id) => `/creator/quests/${id}/edit`,
   },
   completed: {
-    label: "View quest",
+    label: "View mission",
     href: (id) => `/creator/quests/${id}`,
   },
 };
@@ -37,14 +37,14 @@ export default function QuestRow({ quest }: { quest: QuestRowData }) {
       ? null
       : quest.tab === "drafted"
         ? [
-            { label: "Edit quest", icon: SquarePen },
-            { label: "Duplicate quest", icon: Copy },
+            { label: "Edit mission", icon: SquarePen },
+            { label: "Duplicate mission", icon: Copy },
             { label: "Delete draft", icon: Trash2, danger: true },
           ]
         : [
-            { label: "View quest", icon: SquarePen },
-            { label: "Duplicate quest", icon: Copy },
-            { label: "Cancel quest", icon: Trash2, danger: true },
+            { label: "View mission", icon: SquarePen },
+            { label: "Duplicate mission", icon: Copy },
+            { label: "Cancel mission", icon: Trash2, danger: true },
           ];
 
   return (

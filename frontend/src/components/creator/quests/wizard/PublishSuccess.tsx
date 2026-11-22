@@ -22,7 +22,7 @@ export default function PublishSuccess({
         height={80}
         className="size-20"
       />
-      <h2 className="text-2xl font-semibold text-foreground">Quest Published</h2>
+      <h2 className="text-2xl font-semibold text-foreground">Mission Published</h2>
       <p className="max-w-sm text-sm text-muted-foreground">
         Mission #{missionId} is escrowed on Stellar testnet.
       </p>
@@ -46,7 +46,7 @@ export default function PublishSuccess({
             href={`/creator/quests/${questId}`}
             className="flex items-center gap-1.5  bg-[#8B5CF6] px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-[#7c0de0]"
           >
-            View quest
+            View mission
             <ArrowRight className="size-4" />
           </Link>
         ) : null}

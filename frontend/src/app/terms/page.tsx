@@ -138,7 +138,7 @@ export default function TermsPage() {
             </p>
             <ul className="list-inside list-disc space-y-2 text-sm text-muted-foreground pl-2">
               <li>
-                <strong className="text-foreground">Founders (Creators):</strong> Project creators
+                <strong className="text-foreground">Creators:</strong> Project creators
                 who publish missions, define testing criteria, escrow bounty rewards (in USDC or
                 XLM), review community submissions, and approve payouts.
               </li>
@@ -185,7 +185,7 @@ export default function TermsPage() {
             </p>
             <ul className="list-inside list-disc space-y-2 text-sm text-muted-foreground pl-2">
               <li>
-                Founders agree to escrow agreed-upon bounty sums prior to mission launch. Escrowed
+                Creators agree to escrow agreed-upon bounty sums prior to mission launch. Escrowed
                 funds are unlocked and disbursed according to smart contract rules upon milestone
                 approval.
               </li>
