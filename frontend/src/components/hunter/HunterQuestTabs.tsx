@@ -231,12 +231,12 @@ export default function HunterQuestTabs() {
             >
               {tab.label}
               {count ? (
-                <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-[#1B1324]">
+                <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-foreground">
                   {count}
                 </span>
               ) : null}
               {isActive ? (
-                <span className="absolute inset-x-0 bottom-[-1px] h-0.5 bg-[#B78CFF]" />
+                <span className="absolute inset-x-0 bottom-[-1px] h-0.5 bg-brutal-violet" />
               ) : null}
             </button>
           );
@@ -342,7 +342,7 @@ function QuestRow({
                 quest.status === "Submitted"
                   ? "text-foreground"
                   : quest.status === "Reviewing"
-                    ? "text-[#D8BD63]"
+                    ? "text-brutal-yellow"
                     : "text-muted-foreground"
               }
             >
@@ -367,7 +367,7 @@ function QuestRow({
           <button
             type="button"
             onClick={onSubmitFeedback}
-            className="inline-flex items-center justify-center gap-2  bg-[linear-gradient(135deg,#9011FF_0%,#B78CFF_100%)] px-4 py-2 text-sm font-semibold text-foreground shadow-md transition-transform hover:opacity-95 active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-2  bg-brutal-violet px-4 py-2 text-sm font-semibold text-foreground shadow-md transition-transform hover:opacity-95 active:scale-[0.98]"
           >
             <Send className="size-3.5" />
             Submit Feedback
