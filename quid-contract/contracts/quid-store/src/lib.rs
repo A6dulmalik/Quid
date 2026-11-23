@@ -923,7 +923,11 @@ impl QuidStoreContract {
     ///
     /// Missions created before a collector is set stay fee-free, so wiring the
     /// vault up is a non-breaking change for existing deployments.
-    fn quote_protocol_fee(env: &Env, token: &Address, gross_amount: i128) -> Result<i128, QuidError> {
+    fn quote_protocol_fee(
+        env: &Env,
+        token: &Address,
+        gross_amount: i128,
+    ) -> Result<i128, QuidError> {
         let Some(collector) = env
             .storage()
             .instance()

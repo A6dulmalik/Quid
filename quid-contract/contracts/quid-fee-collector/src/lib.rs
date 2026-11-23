@@ -150,9 +150,7 @@ impl QuidFeeCollectorContract {
         if cap < 0 {
             return Err(FeeError::InvalidAmount);
         }
-        env.storage()
-            .instance()
-            .set(&DataKey::FeeCap(token), &cap);
+        env.storage().instance().set(&DataKey::FeeCap(token), &cap);
         Ok(())
     }
 
