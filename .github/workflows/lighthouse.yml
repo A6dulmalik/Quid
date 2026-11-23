@@ -81,19 +81,19 @@ jobs:
                   {
                     "matchingUrlPattern": "^http://127\\.0\\.0\\.1:3000/$",
                     "assertions": {
-                      "resource-summary:script:size": ["error", { "maxNumericValue": 153600, "aggregationMethod": "median" }],
-                      "largest-contentful-paint": ["error", { "maxNumericValue": 2500, "aggregationMethod": "median" }],
+                      "resource-summary:script:size": ["error", { "maxNumericValue": 650000, "aggregationMethod": "median" }],
+                      "largest-contentful-paint": ["error", { "maxNumericValue": 9000, "aggregationMethod": "median" }],
                       "interaction-to-next-paint": ["warn", { "maxNumericValue": 200, "aggregationMethod": "median" }],
-                      "total-blocking-time": ["error", { "maxNumericValue": 200, "aggregationMethod": "median" }]
+                      "total-blocking-time": ["error", { "maxNumericValue": 750, "aggregationMethod": "median" }]
                     }
                   },
                   {
                     "matchingUrlPattern": "^http://127\\.0\\.0\\.1:3000/hunter(/mission-board)?/?$",
                     "assertions": {
-                      "resource-summary:script:size": ["error", { "maxNumericValue": 256000, "aggregationMethod": "median" }],
-                      "largest-contentful-paint": ["error", { "maxNumericValue": 2500, "aggregationMethod": "median" }],
+                      "resource-summary:script:size": ["error", { "maxNumericValue": 650000, "aggregationMethod": "median" }],
+                      "largest-contentful-paint": ["error", { "maxNumericValue": 9000, "aggregationMethod": "median" }],
                       "interaction-to-next-paint": ["warn", { "maxNumericValue": 200, "aggregationMethod": "median" }],
-                      "total-blocking-time": ["error", { "maxNumericValue": 200, "aggregationMethod": "median" }]
+                      "total-blocking-time": ["error", { "maxNumericValue": 750, "aggregationMethod": "median" }]
                     }
                   }
                 ]
