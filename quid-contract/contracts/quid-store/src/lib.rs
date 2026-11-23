@@ -110,6 +110,9 @@ pub trait FeeCollector {
     /// Fee owed on `gross_amount` at the vault's current rate.
     fn compute_fee(env: Env, gross_amount: i128) -> i128;
 
+    /// Fee owed for a specific token, applying tiers/caps when configured.
+    fn compute_fee_for(env: Env, token: Address, gross_amount: i128) -> i128;
+
     /// Pull an exact fee amount from `from` into the vault.
     fn deposit_fee(env: Env, from: Address, token: Address, amount: i128);
 }
@@ -208,7 +211,7 @@ impl QuidStoreContract {
 
         // The protocol fee is charged on top of the escrow, so the full reward
         // pool stays available to hunters. Zero when no collector is configured.
-        let fee = Self::quote_protocol_fee(&env, total_needed)?;
+        let fee = Self::quote_protocol_fee(&env, &reward.reward_token, total_needed)?;
         let owner_debit = total_needed
             .checked_add(fee)
             .ok_or(QuidError::NegativeReward)?;
@@ -920,7 +923,7 @@ impl QuidStoreContract {
     ///
     /// Missions created before a collector is set stay fee-free, so wiring the
     /// vault up is a non-breaking change for existing deployments.
-    fn quote_protocol_fee(env: &Env, gross_amount: i128) -> Result<i128, QuidError> {
+    fn quote_protocol_fee(env: &Env, token: &Address, gross_amount: i128) -> Result<i128, QuidError> {
         let Some(collector) = env
             .storage()
             .instance()
@@ -929,7 +932,7 @@ impl QuidStoreContract {
             return Ok(0);
         };
 
-        let fee = FeeCollectorClient::new(env, &collector).compute_fee(&gross_amount);
+        let fee = FeeCollectorClient::new(env, &collector).compute_fee_for(token, &gross_amount);
         if fee < 0 || fee > gross_amount {
             return Err(QuidError::InvalidAmount);
         }
