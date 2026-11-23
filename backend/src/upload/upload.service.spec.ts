@@ -48,7 +48,7 @@ describe('UploadService', () => {
 
   beforeEach(async () => {
     Object.keys(mockConfig).forEach((k) => delete mockConfig[k]);
-    jest.clearAllMocks();
+    jest.resetAllMocks();
     pngBuffer = await createPng();
 
     const module: TestingModule = await Test.createTestingModule({
@@ -91,9 +91,13 @@ describe('UploadService', () => {
           mimeType: 'image/webp',
         }),
       );
-      expect((mockIpfsClient.pin as jest.Mock).mock.calls[0][0].body).not.toEqual(
-        pngBuffer,
-      );
+      const pinnedBody = (mockIpfsClient.pin as jest.Mock).mock.calls[0][0]
+        .body;
+      expect(await sharp(pinnedBody).metadata()).toMatchObject({
+        format: 'png',
+        width: 8,
+        height: 8,
+      });
       expect(result).toEqual({
         cid: MAIN_CID,
         filename: 'proof.png',
