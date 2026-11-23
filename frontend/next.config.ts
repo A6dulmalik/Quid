@@ -1,8 +1,9 @@
+import withBundleAnalyzerPlugin from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 
 const withBundleAnalyzer =
   process.env.ANALYZE === "true"
-    ? require("@next/bundle-analyzer")({ enabled: true, openAnalyzer: false })
+    ? withBundleAnalyzerPlugin({ enabled: true, openAnalyzer: false })
     : (config: NextConfig) => config;
 
 const backendUrl =
