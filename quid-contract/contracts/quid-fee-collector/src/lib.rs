@@ -164,7 +164,7 @@ impl QuidFeeCollectorContract {
             return Err(FeeError::InvalidAmount);
         }
         let tiers = Self::get_fee_tiers(env.clone());
-        let fee_bps = if tiers.len() > 0 {
+        let fee_bps = if !tiers.is_empty() {
             let mut selected: u32 = Self::get_fee_bps(env.clone());
             for t in tiers.iter() {
                 if gross_amount >= t.min_gross {
