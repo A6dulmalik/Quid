@@ -63,6 +63,8 @@ jobs:
       NEXT_PUBLIC_API_URL: http://localhost:3001
       NEXT_PUBLIC_HORIZON_URL: https://horizon-testnet.stellar.org
       NEXT_PUBLIC_FRIENDBOT_URL: https://friendbot.stellar.org
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_PASSKEY_DOMAIN_HINT: localhost:3000
     defaults:
       run:
         working-directory: ./frontend
@@ -83,6 +85,12 @@ jobs:
 
       - name: Linting
         run: npm run lint
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Frontend tests
+        run: npm test
 
       - name: Build Frontend
         run: npm run build
