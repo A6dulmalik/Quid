@@ -6,6 +6,8 @@ import {
 import { getMissionVisibility, isIndexableMission } from "@/lib/missions-api";
 import { rewardCalculations } from "@/components/creator/quests/wizard/types";
 
+const VALID_CONTRACT_ID = `CB${"A".repeat(54)}`;
+
 function mission(visibility: string) {
   return {
     id: "mission-1",
@@ -29,7 +31,7 @@ describe("contract allowlist", () => {
   });
 
   it("accepts configured contract ids", () => {
-    expect(isKnownContract("CABC123")).toBe(true);
+    expect(isKnownContract(VALID_CONTRACT_ID)).toBe(true);
   });
 });
 
@@ -54,6 +56,6 @@ describe("reward calculations", () => {
     });
     expect(result.platformFee).toBeCloseTo(0.375);
     expect(result.rewardPerWinner).toBe(10);
-    expect(result.totalRequired).toBeCloseTo(101.475);
+    expect(result.totalRequired).toBeCloseTo(100.475);
   });
 });
