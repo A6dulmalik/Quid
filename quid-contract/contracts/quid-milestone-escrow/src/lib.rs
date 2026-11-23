@@ -438,18 +438,22 @@ impl QuidMilestoneEscrowContract {
     fn bump_program(env: &Env, program_id: u64) {
         let key = DataKey::Program(program_id);
         if env.storage().persistent().has(&key) {
-            env.storage()
-                .persistent()
-                .extend_ttl(&key, TTL_THRESHOLD_LEDGERS, TTL_EXTEND_TO_LEDGERS);
+            env.storage().persistent().extend_ttl(
+                &key,
+                TTL_THRESHOLD_LEDGERS,
+                TTL_EXTEND_TO_LEDGERS,
+            );
         }
     }
 
     fn bump_milestone(env: &Env, program_id: u64, milestone_id: u64) {
         let key = DataKey::Milestone(program_id, milestone_id);
         if env.storage().persistent().has(&key) {
-            env.storage()
-                .persistent()
-                .extend_ttl(&key, TTL_THRESHOLD_LEDGERS, TTL_EXTEND_TO_LEDGERS);
+            env.storage().persistent().extend_ttl(
+                &key,
+                TTL_THRESHOLD_LEDGERS,
+                TTL_EXTEND_TO_LEDGERS,
+            );
         }
     }
 
