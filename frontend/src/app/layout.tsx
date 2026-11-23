@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { WalletProvider } from "@/context/WalletProvider";
@@ -41,11 +42,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connection();
+
   return (
     <html lang="en">
       <body

@@ -27,6 +27,7 @@ export function middleware(request: NextRequest) {
     "form-action 'self'",
     "frame-ancestors 'none'",
   ].join("; ");
+  requestHeaders.set("content-security-policy", contentSecurityPolicy);
 
   const response = NextResponse.next({
     request: { headers: requestHeaders },
