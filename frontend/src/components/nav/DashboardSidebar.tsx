@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,13 +14,10 @@ import {
 
 export default function DashboardSidebar({ mode }: { mode: DashboardMode }) {
   const pathname = usePathname();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedPath, setExpandedPath] = useState<string | null>(null);
+  const isExpanded = expandedPath === pathname && pathname !== null;
   const config = getNavConfig(mode);
   const navId = `dashboard-sidebar-nav-${mode}`;
-
-  useEffect(() => {
-    setIsExpanded(false);
-  }, [pathname]);
 
   return (
     <aside
@@ -54,7 +51,9 @@ export default function DashboardSidebar({ mode }: { mode: DashboardMode }) {
         </div>
         <button
           type="button"
-          onClick={() => setIsExpanded((expanded) => !expanded)}
+          onClick={() =>
+            setExpandedPath((current) => (current === pathname ? null : pathname))
+          }
           aria-expanded={isExpanded}
           aria-controls={navId}
           aria-label={

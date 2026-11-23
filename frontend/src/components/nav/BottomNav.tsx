@@ -14,7 +14,8 @@ import { UPCOMING_FEATURES } from "@/lib/upcoming-features";
 
 export default function BottomNav({ mode }: { mode: DashboardMode }) {
   const pathname = usePathname();
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [openMorePath, setOpenMorePath] = useState<string | null>(null);
+  const isMoreOpen = openMorePath === pathname && pathname !== null;
   const moreButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const config = getNavConfig(mode);
@@ -24,17 +25,13 @@ export default function BottomNav({ mode }: { mode: DashboardMode }) {
   );
 
   useEffect(() => {
-    setIsMoreOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!isMoreOpen) return;
 
     closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsMoreOpen(false);
+        setOpenMorePath(null);
         moreButtonRef.current?.focus();
       }
     };
@@ -58,7 +55,7 @@ export default function BottomNav({ mode }: { mode: DashboardMode }) {
             ref={closeButtonRef}
             type="button"
             onClick={() => {
-              setIsMoreOpen(false);
+              setOpenMorePath(null);
               moreButtonRef.current?.focus();
             }}
             aria-label="Close more navigation"
@@ -93,7 +90,7 @@ export default function BottomNav({ mode }: { mode: DashboardMode }) {
                 <Link
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
-                  onClick={() => setIsMoreOpen(false)}
+                  onClick={() => setOpenMorePath(null)}
                   className={`flex min-h-11 w-full min-w-0 flex-col items-center justify-center gap-1 border-t-[4px] px-0.5 py-1.5 text-center text-[9px] font-black uppercase leading-tight tracking-tight transition-colors ${
                     isActive
                       ? `border-brutal-pink text-foreground ${config.activeClassName}`
@@ -110,7 +107,11 @@ export default function BottomNav({ mode }: { mode: DashboardMode }) {
             <button
               ref={moreButtonRef}
               type="button"
-              onClick={() => setIsMoreOpen((open) => !open)}
+              onClick={() =>
+                setOpenMorePath((current) =>
+                  current === pathname ? null : pathname,
+                )
+              }
               aria-expanded={isMoreOpen}
               aria-controls={panelId}
               aria-label={isMoreOpen ? "Close more navigation" : "Open more navigation"}
